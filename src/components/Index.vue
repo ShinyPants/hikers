@@ -3,43 +3,35 @@
     这是index页面
     <PicBar
       :pics="pics"
-      @selected="changePage"
-			:picSize="100">
+      @change="changePage"
+      @again="again">
     </PicBar>
-    {{selected}}项被选中了
+    {{selected}}项被选中了<br>
+    <img src="favicon.ico" alt="">
   </div>
 </template>
 
 <script>
 import PicBar from './bar/PicBar'
+import {icons} from '../config/barconfig'
 
 export default {
   name: 'index',
   components: {
-    PicBar: PicBar
+    PicBar
   },
   data: function() {
     return {
-      pics: [
-        {
-          defaultPic: "/images/logo.png",
-          selectedPic: "hehe"
-        },
-        {
-          defaultPic: "/images/logo.png",
-          selectedPic: "hehe"
-        },
-        {
-          defaultPic: "/images/logo.png",
-          selectedPic: "hehe"
-        }
-      ],
+      pics: icons,
       selected: -1
     }
   },
   methods: {
     changePage(key) {
       this.selected = key
+    },
+    again(key) {
+      alert("是要刷新么" + key)
     }
   }
 }

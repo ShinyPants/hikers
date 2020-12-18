@@ -1,8 +1,8 @@
 <template>
 	<div>
-		<el-row type="flex" class="row-bg" justify="space-around">
-			<el-col :span="6" v-for="(item, index) in pics" :key="index" @click.native="handleSelect(index)" style="cursor: pointer;">
-				<el-image :style="{height: picSize+'px', width: picSize+'px'}" :src="item.defaultPic" :fit="picFit"></el-image>
+		<el-row :style="backStyle" type="flex" class="cls_row" justify="space-around">
+			<el-col :span="3" v-for="(item, index) in pics" :key="index" @click.native="handleSelect(index)" class="col" :style="itemStyle">
+				<el-image :style="{height: picSize+'px', width: picSize+'px'}" :src="select===index?item.selectedPic:item.defaultPic" :fit="picFit"></el-image>
 			</el-col>
 		</el-row>
 	</div>
@@ -30,25 +30,36 @@
 					return ["fill", "contain", "cover", "none"].indexOf(value) !== -1
 				}
 			},
-		},
-		methods: {
-			handleSelect(key) {
-				this.$emit('selected', key)
-			}
+			backStyle: {},
+			itemStyle: {}
 		},
 		data() {
 			return {
 				picStyle: {
 					height: this.picSize + "px",
 					width: this.picSize + "px"
+				},
+				select: -1
+			}
+		},
+		methods: {
+			handleSelect(key) {
+				if (this.select === key) {
+					this.$emit('again', key)
+					return
 				}
+				this.select = key
+				this.$emit('change', key)
 			}
 		}
 	};
 </script>
 
 <style>
-	.row-bg {
+	.cls_row {
 		text-align: center;
+	}
+	.col {
+		cursor: pointer;
 	}
 </style>

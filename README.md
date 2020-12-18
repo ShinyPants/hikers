@@ -27,7 +27,7 @@ npm run lint
 
 # 笔记
 
-## 20.12.17
+## 命令
 
 ### 安装vue-router
 
@@ -64,11 +64,14 @@ props：
 | pics     | 图片url   | [{defaultPic:Str,selectPic:Str}] | 无                       |
 | picSize  | 图片大小 | Number                           | 50 |
 | picFit   | 填充模式  | fill,contain,cover,none          | fill                     |
+| backStyle | 背景style类 | style | 无 |
+| itemStyle | 选项style类 | style |  |
 
 事件:
 
 | 名称     | 功能      | 参数                             |
 | -------- | --------- | ------------------- |
-| selected | 返回选择到的索引 | 索引值 |
+| change | 重新选择的项 | 索引值 |
+| again | 又点了一下 | 索引值 |
 
 # 页面
