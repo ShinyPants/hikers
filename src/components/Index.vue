@@ -3,7 +3,8 @@
     这是index页面
     <PicBar
       :pics="pics"
-      @selected="changePage">
+      @selected="changePage"
+			:picSize="100">
     </PicBar>
     {{selected}}项被选中了
   </div>

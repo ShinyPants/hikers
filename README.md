@@ -62,9 +62,13 @@ props：
 | 名称     | 功能      | 类型                             | 默认值                   |
 | -------- | --------- | -------------------------------- | ------------------------ |
 | pics     | 图片url   | [{defaultPic:Str,selectPic:Str}] | 无                       |
-| picstyle | 图片style | Object                           | {width:50px,height:50px} |
-| picfit   | 填充模式  | fill,contain,cover,none          | fill                     |
+| picSize  | 图片大小 | Number                           | 50 |
+| picFit   | 填充模式  | fill,contain,cover,none          | fill                     |
 
+事件:
 
+| 名称     | 功能      | 参数                             |
+| -------- | --------- | ------------------- |
+| selected | 返回选择到的索引 | 索引值 |
 
 # 页面
