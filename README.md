@@ -55,7 +55,7 @@ npm npm i element-ui -S
 
 功能：以图标显示导航菜单，点击后发出事件，告诉父组件切换页面。
 
-外观：可自定义图片大小，无层级显示，平均分布
+外观：可自定义图片大小，无层级显示，平均分布，父组件能够自定义外观。
 
 props：
 
@@ -65,13 +65,35 @@ props：
 | picSize  | 图片大小 | Number                           | 50 |
 | picFit   | 填充模式  | fill,contain,cover,none          | fill                     |
 | backStyle | 背景style类 | style | 无 |
-| itemStyle | 选项style类 | style |  |
+| itemStyle | 选项style类 | style | 无 |
 
-事件:
+事件：
 
 | 名称     | 功能      | 参数                             |
 | -------- | --------- | ------------------- |
 | change | 重新选择的项 | 索引值 |
 | again | 又点了一下 | 索引值 |
+
+### TextBar
+
+功能：以文字显示导航菜单，点击后发出事件，告诉父组件切换页面。
+
+外观：默认居中，平均分布，父组件能够自定义外观。
+
+props：
+
+| 名称      | 功能          | 类型      | 默认值 |
+| --------- | ------------- | --------- | ------ |
+| titles    | 标题名称      | [Str,Str] | 无     |
+| backStyle | 背景style类   | style     | 无     |
+| itemStyle | 选项style类   | style     | 无     |
+| slctStyle | 选中项style类 | style     | 无     |
+
+事件：
+
+| 名称   | 功能         | 参数   |
+| ------ | ------------ | ------ |
+| change | 重新选择的项 | 索引值 |
+| again  | 又点了一下   | 索引值 |
 
 # 页面
