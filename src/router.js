@@ -1,15 +1,15 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 
-import Index from './components/Index.vue'
-import PicBar from './components/bar/PicBar.vue'
+import Index from './components/page/Index'
 
 Vue.use(Router)
 
 let router = new Router({
   routes: [
     {path: "/", name: "default", component: Index},
-    {path: "/index", name: "index", component: PicBar}
+    {path: "/index", name: "index", component: Index},
+		{path: "/home", name:"home", component: Index}
   ]
 })
 
