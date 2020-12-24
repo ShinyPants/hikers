@@ -1,13 +1,11 @@
 <template>
-	<div>
-		这是主页
-	</div>
+	<div>这是space页面</div>
 </template>
 
 <script>
 	export default {
 		mounted() {
-			console.log("idnex mounted")
+			console.log("space mounted")
 		}
 	}
 </script>

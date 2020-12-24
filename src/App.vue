@@ -1,14 +1,18 @@
 <template>
 	<div id="app">
-		<router-link to="/"></router-link>
-		<router-view ref="dom_view" class="css_view"></router-view>
+		<keep-alive>
+			<component ref="dom_view" class="css_view" :is="showPage"></component>
+		</keep-alive>
 		<!-- 底部 -->
-		<PicBar ref="dom_footer" class="css_footer" :pics="picbar"></PicBar>
+		<PicBar ref="dom_footer" class="css_footer" :pics="picbar" @change="change" @again="again"></PicBar>
 	</div>
 </template>
 
 <script>
 	import PicBar from './components/bar/PicBar.vue'
+	import Index from './components/page/Index.vue'
+	import Space from './components/page/Space.vue'
+	import Cate from './components/page/Categories.vue'
 
 	export default {
 		name: 'App',
@@ -19,27 +23,39 @@
 			return {
 				picbar: [{
 						defaultPic: "/icons/forbidden.png",
-						selectedPic: "/icons/forbidden_filled.png"
+						selectedPic: "/icons/forbidden_filled.png",
+						toPage: "/index"
 					},
 					{
 						defaultPic: "/icons/help.png",
-						selectedPic: "/icons/help_filled.png"
+						selectedPic: "/icons/help_filled.png",
+						toPage: "/cate"
 					},
 					{
 						defaultPic: "/icons/info.png",
-						selectedPic: "/icons/info_filled.png"
+						selectedPic: "/icons/info_filled.png",
+						toPage: "/space"
 					}
-				]
+				],
+				pages: [Index, Cate, Space],
+				showPage: Index
 			}
 		},
 		methods: {
 			setViewBottom(addHeight) {
 				// 获取底端导航栏的高度
 				let footerHeight = this.$refs.dom_footer.$el.offsetHeight
-				// 增加点距离
+				// 增加一些距离
 				footerHeight += addHeight
 				// 修改内容的bottom属性
 				this.$refs.dom_view.$el.style.bottom = footerHeight + "px"
+			},
+			change(key) {
+				// 切换页面
+				this.showPage = this.pages[key]
+			},
+			again(key) {
+				console.log(key)
 			}
 		},
 		mounted() {
@@ -57,6 +73,7 @@
 		width: 100%;
 		display: block;
 	}
+
 	.css_view {
 		position: absolute;
 		overflow: auto;
