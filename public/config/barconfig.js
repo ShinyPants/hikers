@@ -13,6 +13,4 @@ const icons = [
   }
 ]
 
-export {
-  icons
-}
+export default icons

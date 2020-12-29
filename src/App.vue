@@ -13,6 +13,7 @@
 	import Index from './components/page/Index.vue'
 	import Space from './components/page/Space.vue'
 	import Cate from './components/page/Categories.vue'
+	import axios from 'axios'
 
 	export default {
 		name: 'App',
@@ -21,22 +22,7 @@
 		},
 		data() {
 			return {
-				picbar: [{
-						defaultPic: "/icons/forbidden.png",
-						selectedPic: "/icons/forbidden_filled.png",
-						toPage: "/index"
-					},
-					{
-						defaultPic: "/icons/help.png",
-						selectedPic: "/icons/help_filled.png",
-						toPage: "/cate"
-					},
-					{
-						defaultPic: "/icons/info.png",
-						selectedPic: "/icons/info_filled.png",
-						toPage: "/space"
-					}
-				],
+				picbar: [],
 				pages: [Index, Cate, Space],
 				showPage: Index
 			}
@@ -52,15 +38,30 @@
 			},
 			change(key) {
 				// 切换页面
-				this.showPage = this.pages[key]
+				//this.showPage = this.pages[key]
+				this.showPage = this.picbar[key].toPage
 			},
 			again(key) {
 				console.log(key)
+			},
+			setBar() {
+				axios.request({
+					url: '/config/barconfig.json',
+					method: 'get'
+				}).then(res => {
+					this.picbar = res.data
+					for (let pic in this.picbar) {
+						pic.toPage = () => require(pic.toPage())
+					}
+					console.log(this.picbar)
+				})
 			}
 		},
 		mounted() {
 			// 设置router-view的bottom以便不被底部导航遮挡
 			this.setViewBottom(5)
+			// 试图导入js
+			this.setBar()
 		}
 	}
 </script>
