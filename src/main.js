@@ -14,7 +14,7 @@ Vue.use(ElementUI)
 // 将axios放入全局变量，将来需要时可用this.$axios
 Vue.prototype.$axios = axios
 // 设置axios的baseUrl
-axios.defaults.baseURL = "http://127.0.0.1:8081"
+// axios.defaults.baseURL = "http://127.0.0.1:8081"
 
 Vue.config.productionTip = false
 

@@ -1,0 +1,22 @@
+{
+	"status": 1,
+	"data": [{
+			"id": 0,
+			"picUrl": "/icons/help.png",
+			"name": "分区三",
+			"score": 50
+		},
+		{
+			"id": 1,
+			"picUrl": "/icons/help_filled.png",
+			"name": "分区一",
+			"score": 80
+		},
+		{
+			"id": 2,
+			"picUrl": "/icons/info.png",
+			"name": "分区二",
+			"score": 70
+		}
+	]
+}
