@@ -1,10 +1,10 @@
 <template>
-	<div style="overflow: hidden;">
-		<el-row :gutter="24" type="flex" justify="space-around">
-			<el-col v-for="(part,index) in parts" :key="part.id" :span="10">
-				<el-card class="el-card" :key="index">
-					<el-image :src="part.picUrl" class="image"></el-image>
-					<div style="padding: 14px;">
+	<div style="overflow: hidden; text-align: center;">
+		<el-row :gutter="24" type="flex" style="margin: 0 auto;">
+			<el-col v-for="(part,index) in parts" :key="index" :span="6">
+				<el-card :key="index">
+					<el-image :src="part.picUrl"></el-image>
+					<div style="width: 100%;">
 						<span>{{part.name}}</span>
 					</div>
 				</el-card>
@@ -46,21 +46,32 @@
 </script>
 
 <style>
-	.image {
-		width: 100px;
-		display: block;
-	}
 	.el-row {
 		margin-bottom: 20px;
+		display: flex;
+		flex-wrap: wrap;
+		width: 95%;
 	}
+
 	.el-col {
 		border-radius: 4px;
-		/* align-items: stretch;
-		margin-bottom: 40px; */
+		align-items: stretch;
+		margin-bottom: 20px;
+		margin-top: 20px;
 	}
+
 	.el-card {
 		min-width: 100%;
 		height: 100%;
-		margin-right: 20px;
+		overflow: hidden;
+	}
+
+	.el-card .el-card__body {
+		padding: 0;
+	}
+
+	.el-image {
+		width: 100%;
+		display: block;
 	}
 </style>
