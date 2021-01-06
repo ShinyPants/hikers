@@ -15,6 +15,11 @@ Vue.use(ElementUI)
 Vue.prototype.$axios = axios
 // 设置axios的baseUrl
 // axios.defaults.baseURL = "http://127.0.0.1:8081"
+axios.get("/config/axios.json")
+.then((res) => {
+	res = res.data.server
+	axios.defaults.baseURL = res
+})
 
 Vue.config.productionTip = false
 

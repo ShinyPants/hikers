@@ -22,7 +22,7 @@
 		},
 		methods: {
 			refresh() {
-				this.$axios.get("/api/parts.json")
+				this.$axios.get("/api/parts")
 					.then((res) => {
 						res = res.data
 						if (res.status > 0) {
