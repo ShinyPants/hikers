@@ -18,6 +18,7 @@
 				this.$router.replace("/home").catch(err => err)
 			else
 				this.$router.replace("/adm").catch(err => err)
+      // this.$router.replace("/regist")
 		}
 	}
 </script>

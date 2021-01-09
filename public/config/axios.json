@@ -1,4 +1,10 @@
 {
-	"server": "http://localhost:8080",
-	"parts": "/api/parts.json"
+	"server": "http://127.0.0.1:8081/",
+	"parts": "/api/parts.json",
+  "user": {
+    "phone": "/api/user/phone/",
+    "nike": "/api/user/nike/",
+    "mail": "/api/user/mail/",
+    "regist": "/api/user/regist"
+  }
 }

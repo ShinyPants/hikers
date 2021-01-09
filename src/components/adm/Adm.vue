@@ -10,7 +10,7 @@
 						<el-menu-item-group>
 							<template slot="title">分组一</template>
 							<el-menu-item index="1-1" @click="handleClick('/adm/cate')">查看分区</el-menu-item>
-							<el-menu-item index="1-2">选项2</el-menu-item>
+							<el-menu-item index="1-2" @click="handleClick('/adm/regist')">注册</el-menu-item>
 						</el-menu-item-group>
 						<el-menu-item-group title="分组2">
 							<el-menu-item index="1-3">选项3</el-menu-item>
@@ -54,6 +54,7 @@
 			</el-aside>
 			<!-- 侧边栏  结束 -->
 			<!-- header  开始 -->
+      <!-- 主要包含管理员的姓名 -->
 			<el-container>
 				<el-header style="text-align: right; font-size: 12px">
 					<el-dropdown>
