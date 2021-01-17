@@ -1,10 +1,11 @@
 {
 	"server": "http://127.0.0.1:8081/",
-	"parts": "/api/parts.json",
+	"parts": "/api/parts",
   "user": {
     "phone": "/api/user/phone/",
     "nike": "/api/user/nike/",
     "mail": "/api/user/mail/",
-    "regist": "/api/user/regist"
+    "regist": "/api/user/regist",
+    "login": "/api/user/login"
   }
 }

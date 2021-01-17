@@ -1,12 +1,15 @@
 <template>
-	<div>这是focus页面</div>
+	<div>
+    {{$theUser.uid}}
+  </div>
 </template>
 
 <script>
 	export default {
-		mounted() {
-			console.log("focus mounted")
-		}
+    name: 'focus',
+    mounted() {
+      console.log(this.$theUser)
+    }
 	}
 </script>
 

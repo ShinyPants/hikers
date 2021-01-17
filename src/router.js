@@ -6,6 +6,7 @@ import Home from './components/page/Home.vue'
 import Adm from './components/adm/Adm.vue'
 import Cate from './components/page/home/Categories.vue'
 import Regist from './components/page/Regist.vue'
+import Login from './components/page/Login.vue'
 
 // 使用router
 Vue.use(Router)
@@ -15,17 +16,28 @@ let router = new Router({
 	routes: [{
 			path: "/",
 			name: "default",
-			component: Home
+			component: Home,
+      meta: {
+        keepAlive: true
+      }
 		},
 		{
 			path: "/home",
 			name: "home",
-			component: Home
+			component: Home,
+      meta: {
+        keepAlive: true
+      }
 		},
     {
       path: "/regist",
       name: "regist",
       component: Regist
+    },
+    {
+      path: "/login",
+      name: "login",
+      component: Login
     },
 		{
 			path: "/adm",
@@ -38,6 +50,10 @@ let router = new Router({
       {
         path: "regist",
         component: Regist
+      },
+      {
+        path: "login",
+        component: Login
       }]
 		}
 	]

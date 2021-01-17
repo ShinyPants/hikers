@@ -50,12 +50,16 @@
 		methods: {
 			handleSelect(key) {
 				if (this.select === key) {
-					this.$emit("again", key);
-					return;
+					this.$emit("again", key)
+					return
 				}
-				this.select = key;
-				this.$emit("change", key);
+				this.select = key
+				this.$emit("change", key)
 			},
+      changeSelect(key) {
+        console.log(key)
+        this.select = key
+      }
 		}
 	};
 </script>

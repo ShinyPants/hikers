@@ -43,7 +43,8 @@
 						toPage: Space
 					}
 				],
-				showPage: Index
+				showPage: Index,
+        pageKey: 0
 			}
 		},
 		methods: {
@@ -56,7 +57,14 @@
 				this.$refs.dom_view.$el.style.bottom = footerHeight + "px"
 			},
 			change(key) {
+        // 检查是否登录
+        if (this.$theUser === undefined && key > 1) {
+          this.$router.push("/login").catch(err => err)
+          this.$refs.dom_footer.changeSelect(this.pageKey)
+          return
+        }
 				// 切换页面
+        this.pageKey = key
 				this.showPage = this.picbar[key].toPage
 			},
 			again(key) {

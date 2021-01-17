@@ -1,51 +1,53 @@
 <template>
   <div>
-    <!-- 登录信息填写 -->
-    <div :style="rstep==0?'display: block':'display: none'">
-      <el-form ref="form1" :model="user" :rules="user_rule" status-icon label-width="100px">
-        <el-form-item label="手机号" prop="phone" required>
-          <el-input type="number" v-model="user.phone" auto-complete="off"></el-input>
-        </el-form-item>
-        <el-form-item label="密码" prop="pwd" required>
-          <el-input type="password" v-model="user.pwd" auto-complete="off"></el-input>
-        </el-form-item>
-        <el-form-item label="确认密码" prop="checkpwd" required>
-          <el-input type="password" v-model="user.checkpwd" auto-complete="off"></el-input>
-        </el-form-item>
-      </el-form>
-    </div>
-    <!-- 密码找回问题 -->
-    <div :style="rstep==1?'display: block':'display: none'">
-      <el-form ref="form2" :model="user" :rules="user_rule" status-icon label-width="100px">
-        <el-form-item label="找回问题" prop="question" required>
-          <el-input type="text" v-model="user.question" auto-complete="off"></el-input>
-        </el-form-item>
-        <el-form-item label="问题答案" prop="answer" required>
-          <el-input type="text" v-model="user.answer" auto-complete="off"></el-input>
-        </el-form-item>
-      </el-form>
-    </div>
-    <!-- 实名登记 -->
-    <div :style="rstep==2?'display: block':'display: none'">
-      <el-form ref="form3" :model="user" :rules="user_rule" status-icon label-width="100px">
-        <el-form-item label="昵称" prop="nikeName" required>
-          <el-input type="text" v-model="user.nikeName" auto-complete="off"></el-input>
-        </el-form-item>
-        <el-form-item label="真实姓名" prop="uname" required>
-          <el-input type="text" v-model="user.uname" auto-complete="off"></el-input>
-        </el-form-item>
-        <el-form-item label="生日" prop="birthday">
-          <el-date-picker type="date" placeholder="选择日期" v-model="user.birthday"></el-date-picker>
-        </el-form-item>
-        <el-form-item label="邮箱" prop="mail">
-          <el-input v-model="user.mail"></el-input>
-        </el-form-item>
-      </el-form>
+    <div class="div_forms">
+      <!-- 登录信息填写 -->
+      <div :style="rstep==0?'display: block':'display: none'">
+        <el-form ref="form1" :model="user" :rules="user_rule" status-icon label-width="100px">
+          <el-form-item label="手机号" prop="phone" required>
+            <el-input type="number" v-model="user.phone" auto-complete="off"></el-input>
+          </el-form-item>
+          <el-form-item label="密码" prop="pwd" required>
+            <el-input type="password" v-model="user.pwd" auto-complete="off"></el-input>
+          </el-form-item>
+          <el-form-item label="确认密码" prop="checkpwd" required>
+            <el-input type="password" v-model="user.checkpwd" auto-complete="off"></el-input>
+          </el-form-item>
+        </el-form>
+      </div>
+      <!-- 密码找回问题 -->
+      <div :style="rstep==1?'display: block':'display: none'">
+        <el-form ref="form2" :model="user" :rules="user_rule" status-icon label-width="100px">
+          <el-form-item label="找回问题" prop="question" required>
+            <el-input type="text" v-model="user.question" auto-complete="off"></el-input>
+          </el-form-item>
+          <el-form-item label="问题答案" prop="answer" required>
+            <el-input type="text" v-model="user.answer" auto-complete="off"></el-input>
+          </el-form-item>
+        </el-form>
+      </div>
+      <!-- 实名登记 -->
+      <div :style="rstep==2?'display: block':'display: none'">
+        <el-form ref="form3" :model="user" :rules="user_rule" status-icon label-width="100px">
+          <el-form-item label="昵称" prop="nikeName" required>
+            <el-input type="text" v-model="user.nikeName" auto-complete="off"></el-input>
+          </el-form-item>
+          <el-form-item label="真实姓名" prop="uname" required>
+            <el-input type="text" v-model="user.uname" auto-complete="off"></el-input>
+          </el-form-item>
+          <el-form-item label="生日" prop="birthday">
+            <el-date-picker type="date" placeholder="选择日期" v-model="user.birthday"></el-date-picker>
+          </el-form-item>
+          <el-form-item label="邮箱" prop="mail">
+            <el-input v-model="user.mail"></el-input>
+          </el-form-item>
+        </el-form>
+      </div>
     </div>
     <!-- 下一步按钮 -->
-    <div>
-      <el-button @click="beforestep" type="text" :disabled="rstep==0" v-loading="loading">上一步</el-button>
-      <el-button @click="nextstep" type="success" round>{{rstep==2?"提交":"下一步"}}</el-button>
+    <div class="div_buttons">
+      <el-button @click="beforestep" type="text" :disabled="rstep==0">上一步</el-button>
+      <el-button @click="nextstep" type="success" round v-loading="loading">{{rstep==2?"提交":"下一步"}}</el-button>
     </div>
     <!-- 步骤条 -->
     <div>
@@ -255,18 +257,26 @@
     methods: {
       nextstep() {
         if (this.rstep === 0) {
+          this.loading = true
           this.$refs.form1.validate((valid) => {
-            if (valid)
+            if (valid) {
               this.rstep++
-            else
+              this.loading = false
+            } else {
+              this.loading = false
               return false
+            }
           })
         } else if (this.rstep === 1) {
+          this.loading = true
           this.$refs.form2.validate((valid) => {
-            if (valid)
+            if (valid) {
               this.rstep++
-            else
+              this.loading = false
+            } else {
+              this.loading = false
               return false
+            }
           })
         } else if (this.rstep === 2) {
           this.loading = true
@@ -280,6 +290,7 @@
                       this.rstep++
                       this.loading = false
                       alert('注册成功')
+                      this.$router.back()
                     } else {
                       this.loading = false
                       alert('注册失败')
@@ -318,5 +329,14 @@
   /* 解决number的箭头问题 */
   input[type="number"] {
     -moz-appearance: textfield;
+  }
+  
+  .div_forms {
+    padding: 50px 20px 10px 15px;
+  }
+  
+  .div_buttons {
+    text-align: center;
+    padding-bottom: 10px;
   }
 </style>
