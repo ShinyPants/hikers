@@ -2,7 +2,7 @@
 	<div style="overflow: hidden; text-align: center;">
 		<el-row :gutter="24" type="flex" style="margin: 0 auto;">
 			<el-col v-for="(part,index) in parts" :key="index" :span="6">
-				<el-card :key="index">
+				<el-card :key="index" @click.native="showPart(part.id)">
 					<el-image :src="part.picUrl"></el-image>
 					<div style="width: 100%;">
 						<span>{{part.name}}</span>
@@ -36,7 +36,10 @@
 					.catch((error) => {
 						console.log(error)
 					})
-			}
+			},
+      showPart(partId) {
+        this.$router.push('/part/' + partId)
+      }
 		},
 		mounted() {
 			// 通过axios获取分区信息

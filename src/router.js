@@ -7,6 +7,8 @@ import Adm from './components/adm/Adm.vue'
 import Cate from './components/page/home/Categories.vue'
 import Regist from './components/page/Regist.vue'
 import Login from './components/page/Login.vue'
+import Part from './components/page/Part.vue'
+import Edit from './components/page/Edit.vue'
 
 // 使用router
 Vue.use(Router)
@@ -38,6 +40,16 @@ let router = new Router({
       path: "/login",
       name: "login",
       component: Login
+    },
+    {
+      path: "/part/:partId",
+      name: "part",
+      component: Part
+    },
+    {
+      path: "/edit",
+      name: "edit",
+      component: Edit
     },
 		{
 			path: "/adm",
