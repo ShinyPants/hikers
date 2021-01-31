@@ -40,7 +40,6 @@
     margin: 10px;
   }
   .btn_edit {
-    width: 5%;
     float: right;
   }
 </style>

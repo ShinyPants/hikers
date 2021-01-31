@@ -7,5 +7,8 @@
     "mail": "/api/user/mail/",
     "regist": "/api/user/regist",
     "login": "/api/user/login"
+  },
+  "file": {
+    "pic": "http://127.0.0.1:8081/file/pic"
   }
 }
