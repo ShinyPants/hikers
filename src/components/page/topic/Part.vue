@@ -1,5 +1,6 @@
 <template>
   <div>
+    <div style="text-align: center;"><span>{{partName}}</span><span>欢迎您~</span></div>
     <!-- 顶端的编辑菜单 -->
     <div class="div_top">
       <el-input style="width: 80%;" placeholder="板块内搜索" v-model="searchStr">
@@ -15,14 +16,14 @@
     name: 'part',
     data() {
       return {
-        searchStr: ''
+        searchStr: '',
+        partId: '',
+        partName: ''
       }
     },
-    created() {
-      // 初始化数据
-    },
-    mounted() {
-      // 执行什么呢？
+    activated() {
+      if (this.partId !== this.$route.params.partId)
+        this.refresh()
     },
     methods: {
       doSearch() {
@@ -30,6 +31,11 @@
       },
       doEdit() {
         this.$router.push('/edit').catch(err => err)
+      },
+      refresh() {
+        this.partId = this.$route.params.partId
+        this.partName = this.$route.params.partName
+        // 获取分区的内容
       }
     }
   }
@@ -39,6 +45,7 @@
   .div_top {
     margin: 10px;
   }
+
   .btn_edit {
     float: right;
   }

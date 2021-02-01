@@ -2,7 +2,7 @@
 	<div style="overflow: hidden; text-align: center;">
 		<el-row :gutter="24" type="flex" style="margin: 0 auto;">
 			<el-col v-for="(part,index) in parts" :key="index" :span="6">
-				<el-card :key="index" @click.native="showPart(part.id)">
+				<el-card :key="index" @click.native="showPart(part.id, part.name)">
 					<el-image :src="part.picUrl"></el-image>
 					<div style="width: 100%;">
 						<span>{{part.name}}</span>
@@ -14,6 +14,8 @@
 </template>
 
 <script>
+  import Vue from 'vue'
+  
 	export default {
 		data() {
 			return {
@@ -27,9 +29,10 @@
 						res = res.data
 						if (res.status > 0) {
 							// 排序
-							this.parts = res.data.sort(function(a, b) {
+							Vue.prototype.$parts = res.data.sort(function(a, b) {
 								return b["score"] - a["score"]
 							})
+              this.parts = this.$parts
 						} else
 							console.log(res.data)
 					})
@@ -37,13 +40,16 @@
 						console.log(error)
 					})
 			},
-      showPart(partId) {
-        this.$router.push('/part/' + partId)
+      showPart(partId, partName) {
+        this.$router.push('/part/' + partId + '/' + partName)
       }
 		},
 		mounted() {
-			// 通过axios获取分区信息
-			this.refresh();
+			// 获取分区信息
+      if (this.$parts === undefined)
+        this.refresh();
+      else
+        this.parts = this.$parts
 		}
 	}
 </script>
@@ -67,6 +73,7 @@
 		min-width: 100%;
 		height: 100%;
 		overflow: hidden;
+    cursor: pointer;
 	}
 
 	.el-card .el-card__body {

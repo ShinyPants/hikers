@@ -68,7 +68,8 @@
 				this.showPage = this.picbar[key].toPage
 			},
 			again(key) {
-				console.log(key)
+        this.$refs.dom_view.refresh()
+        key
 			}
 		},
 		mounted() {

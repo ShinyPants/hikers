@@ -8,7 +8,10 @@
 	export default {
 		mounted() {
 			console.log("idnex mounted")
-		}
+		},
+    methods: {
+      refresh() {}
+    }
 	}
 </script>
 

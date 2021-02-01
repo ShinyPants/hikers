@@ -3,7 +3,7 @@
 		<el-row :style="backStyle" id="e_row"
 		type="flex" justify="space-around">
 			<el-col id="e_col" :span="3" v-for="(item, index) in pics" :key="index" @click.native="handleSelect(index)" :style="itemStyle">
-				<el-image :style="{height: picSize+'px', width: picSize+'px'}" :src="select===index?item.selectedPic:item.defaultPic" :fit="picFit"></el-image>
+				<el-image :style="{height: picSize+'px', width: picSize+'px', cursor: 'pointer'}" :src="select===index?item.selectedPic:item.defaultPic" :fit="picFit"></el-image>
 			</el-col>
 		</el-row>
 	</div>

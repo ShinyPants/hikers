@@ -22,6 +22,23 @@ Vue.prototype.$axios = axios
 
 Vue.config.productionTip = false
 
+// 判断某个路由是否需要登录
+router.beforeEach(function(to, from, next) {
+  if (to.meta.needLogin) {
+    // 如果需要登录
+    if (Vue.prototype.$theUser !== undefined) {
+      next()
+    } else {
+      next({
+        path: "/login"
+      })
+    }
+  } else {
+    // 不需要登录
+    next()
+  }
+})
+
 new Vue({
 	render: h => h(App),
 	router,

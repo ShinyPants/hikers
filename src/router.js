@@ -5,10 +5,10 @@ import Router from 'vue-router'
 import Home from './components/page/Home.vue'
 import Adm from './components/adm/Adm.vue'
 import Cate from './components/page/home/Categories.vue'
-import Regist from './components/page/Regist.vue'
-import Login from './components/page/Login.vue'
-import Part from './components/page/Part.vue'
-import Edit from './components/page/Edit.vue'
+import Regist from './components/page/basic/Regist.vue'
+import Login from './components/page/basic/Login.vue'
+import Part from './components/page/topic/Part.vue'
+import Edit from './components/page/topic/Edit.vue'
 
 // 使用router
 Vue.use(Router)
@@ -42,14 +42,20 @@ let router = new Router({
       component: Login
     },
     {
-      path: "/part/:partId",
+      path: "/part/:partId/:partName",
       name: "part",
-      component: Part
+      component: Part,
+      meta: {
+        keepAlive: false
+      }
     },
     {
       path: "/edit",
       name: "edit",
-      component: Edit
+      component: Edit,
+      meta: {
+        needLogin: true
+      }
     },
 		{
 			path: "/adm",
