@@ -50,7 +50,7 @@ let router = new Router({
       }
     },
     {
-      path: "/edit",
+      path: "/edit/:partId",
       name: "edit",
       component: Edit,
       meta: {

@@ -30,9 +30,10 @@
         alert(this.searchStr)
       },
       doEdit() {
-        this.$router.push('/edit').catch(err => err)
+        this.$router.push('/edit/' + this.partId).catch(err => err)
       },
       refresh() {
+        // 从url获取参数
         this.partId = this.$route.params.partId
         this.partName = this.$route.params.partName
         // 获取分区的内容

@@ -30,7 +30,6 @@
         :on-preview="handlePreview"
         :on-change="handleChange"
         :on-remove="handleRemove"
-        :before-upload="handleBeforeUpload"
         :on-success="handleSuccess"
         :on-error="handleError"
         :class="{hide:!isShowLoader}">
@@ -49,6 +48,7 @@
       return {
         topic: {
           title: '',
+          pid: 0,
           info: '',
           pics: [],
           uid: 0,
@@ -59,15 +59,34 @@
         picLimit: 9,
         isShowLoader: true,
         picsNum: 0,
-        uploadCount: 0
+        uploadCount: 0,
+        subSuccess: false
       }
     },
     mounted() {
-      // 获取用户名和密码
-      this.topic.uid = this.$theUser.uid
-      this.topic.pwd = this.$theUser.pwd
+      this.getInfo()
+    },
+    activated() {
+      this.getInfo()
+      if (this.subSuccess === true)
+        this.reset()
     },
     methods: {
+      getInfo() {
+        // 获取用户名和密码
+        this.topic.uid = this.$theUser.uid
+        this.topic.pwd = this.$theUser.pwd
+        this.topic.pid = this.$route.params.partId
+      },
+      reset() {
+        // 重置数据
+        this.topic.title = ''
+        this.topic.info = ''
+        this.topic.pics = []
+        this.picsNum = 0
+        this.uploadCount = 0
+        this.subSuccess = false
+      },
       submit() {
         // 检查数据
         if (this.topic.title.split().length===0) {
@@ -78,12 +97,44 @@
           this.$message("内容不能为空")
           return false
         }
+        if (this.topic.pid === 0) {
+          this.$message("未知错误")
+          return false
+        }
+        if (this.topic.uid <= 0) {
+          this.$message("请先登录")
+          this.$router.replace("/login")
+          return false
+        }
+        // 检查图片数量
+        if (this.picsNum === 0 || this.uploadCount >= this.picsNum) {
+          this.doSubmit()
+          return
+        }
         // 设置用来保存图片url的数组长度
         this.topic.pics = new Array(this.picsNum)
         this.$refs.uploader.submit()
       },
+      goBack() {
+        this.$router.back()
+      },
       doSubmit() {
         this.$axios.post(this.$urls.user.topic, this.topic)
+          .then(res => {
+            res = res.data
+            if (res.status > 0) {
+              this.$message("提交成功")
+              this.subSuccess = true
+            }
+            else
+              this.$message("提交失败")
+            this.goBack()
+          })
+          .catch(err => {
+            this.$message("提交失败")
+            this.goBack()
+            err
+          })
       },
       handlePreview(file) {
         this.picUrl = file.url
@@ -98,10 +149,6 @@
       handleRemove(file, fileList) {
         this.isShowLoader = fileList.length < this.picLimit
         this.picsNum = fileList.length
-      },
-      handleBeforeUpload(file, fileList) {
-        if (fileList.length === 0)
-          this.doSubmit();
       },
       handleSuccess(resp, file, fileList) {
         // 一张一张上传的，所以要确定图片顺序

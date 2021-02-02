@@ -5,7 +5,6 @@
 <script>
 	export default {
 		mounted() {
-			console.log("space mounted")
 		},
     methods: {
       refresh() {}
