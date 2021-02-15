@@ -1,6 +1,6 @@
 <template>
   <div id="home">
-    <el-container ref="container" :class="{'max-width': !_isMobile()}">
+    <el-container ref="container">
       <el-main>
         <keep-alive>
           <el-scrollbar style="height: 100%;">
@@ -87,28 +87,11 @@
       again() {
         this.$refs.dom_view.refresh()
       },
-      _isMobile() {
-        let flag = navigator.userAgent.match(
-          /(phone|pad|pod|iPhone|iPod|ios|iPad|Android|Mobile|BlackBerry|IEMobile|MQQBrowser|JUC|Fennec|wOSBrowser|BrowserNG|WebOS|Symbian|Windows Phone)/i
-        )
-        return flag;
-      }
     }
   }
 </script>
 
 <style>
-  #home {
-    height: 100%;
-    background-image: url('/images/backpic.png');
-    background-repeat: no-repeat;
-    background-size: 100% 100%;
-  }
-
-  .max-width {
-    max-width: 800px;
-  }
-
   .el-container {
     margin-left: auto;
     margin-right: auto;

@@ -9,6 +9,9 @@ import Regist from './components/page/basic/Regist.vue'
 import Login from './components/page/basic/Login.vue'
 import Part from './components/page/topic/Part.vue'
 import Edit from './components/page/topic/Edit.vue'
+import Myinfo from './components/page/uinfo/Myinfo.vue'
+
+import Main from './components/Main.vue'
 
 // 使用router
 Vue.use(Router)
@@ -18,59 +21,70 @@ let router = new Router({
 	routes: [{
 			path: "/",
 			name: "default",
-			component: Home,
+			component: Main,
       meta: {
         keepAlive: true
-      }
+      },
+      redirect: '/home',
+      children: [
+        {
+          path: '/home',
+          name: 'home',
+          component: Home,
+          meta: {
+            keepAlive: true
+          }
+        },
+        {
+          path: "/login",
+          name: "login",
+          component: Login
+        },
+        {
+          path: "/regist",
+          name: "regist",
+          component: Regist
+        },
+        {
+          path: "/part/:partId/:partName",
+          name: "part",
+          component: Part,
+          meta: {
+            keepAlive: false
+          }
+        },
+        {
+          path: "/edit/:partId",
+          name: "edit",
+          component: Edit,
+          meta: {
+            needLogin: true
+          }
+        },
+        {
+          path: "/space/:uid",
+          name: "space",
+          component: Myinfo,
+          meta: {
+            keepAlive: false
+          }
+        }
+      ]
 		},
-		{
-			path: "/home",
-			name: "home",
-			component: Home,
-      meta: {
-        keepAlive: true
-      }
-		},
-    {
-      path: "/regist",
-      name: "regist",
-      component: Regist
-    },
-    {
-      path: "/login",
-      name: "login",
-      component: Login
-    },
-    {
-      path: "/part/:partId/:partName",
-      name: "part",
-      component: Part,
-      meta: {
-        keepAlive: false
-      }
-    },
-    {
-      path: "/edit/:partId",
-      name: "edit",
-      component: Edit,
-      meta: {
-        needLogin: true
-      }
-    },
 		{
 			path: "/adm",
-			name: "adm",
+			name: "/adm",
 			component: Adm,
 			children: [{
-				path: "cate",
+				path: "/cate",
 				component: Cate
 			},
       {
-        path: "regist",
+        path: "/regist",
         component: Regist
       },
       {
-        path: "login",
+        path: "/login",
         component: Login
       }]
 		}

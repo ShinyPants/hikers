@@ -12,7 +12,7 @@
       <!-- 顶端的编辑菜单 -->
       <el-header>
         <el-row>
-          <el-col :span="1"><i class="el-icon-arrow-left" style="cursor: pointer;" @click="doBack"></i></el-col>
+          <el-col :span="1"><i class="el-icon-arrow-left"></i></el-col>
           <el-col :span="22">
             <el-input placeholder="板块内搜索" v-model="searchStr">
               <i @click="doSearch" slot="suffix" class="el-input__icon el-icon-search"></i>
@@ -24,28 +24,32 @@
         </el-row>
       </el-header>
       <el-main>
+        {{topics}}
         <!-- 内容 -->
-        <div>
-          <div v-for="t in topics" :key="t.tid" style="width: 100%; border-radius: 10px; margin-bottom: 10px; background-color: antiquewhite;">
-            <el-image :src="$urls.server + t.photo" fit="cover" style="width: 50px; height: 50px; border-radius: 50%; overflow: hidden; float: left;"></el-image>
-            <div style="margin-left: 55px;">
+        <div style="width: 600px; margin: 0 auto;">
+        <div v-for="t in topics" :key="t.tid" style="width: 100%;">
+            <el-image :src="$urls.server + t.photo" fit="cover"
+            style="width: 50px; height: 50px; border-radius: 50%; overflow: hidden; float: left;"></el-image>
+            <div style="margin-left: 55px; background-color: aquamarine;">
               <div>
-                <el-button type="text" @click="checkInfo(t.uid)" style="color: #fb7299; font-size: x-large; padding: 0;">{{t.nikeName}}</el-button>
+                <!-- t.uid 打开链接 -->
+                {{t.nikeName}}
               </div>
-              <div style="font-size: small; color: #99a2aa;">{{getFormatTime(t.time)}}</div>
+              <div>{{t.time}}</div>
               <div>{{t.title}}</div>
               <div>{{t.info}}</div>
               <div>
                 <el-row :gutter="24" style="text-align: center; margin: 0 auto;">
                   <el-col :span="getSpan(t.pics)" v-for="(p,index) in t.pics" :key="index">
                     <div style="width: 1px; padding-bottom: 100%; display: inline;"></div>
-                    <el-image :src="p" fit="cover" class="img-pics" :preview-src-list="t.pics">
-                    </el-image>
+                      <el-image :src="$urls.server + p" fit="cover"
+                      :class="{'pic-one': isShow(t.pics, 1), 'pic-two': isShow(t.pics, 2), 'pic-three': isShow(t.pics, 9)}">
+                      </el-image>
                   </el-col>
                 </el-row>
               </div>
             </div>
-          </div>
+        </div>
         </div>
       </el-main>
     </el-container>
@@ -75,42 +79,6 @@
       },
       doEdit() {
         this.$router.push('/edit/' + this.partId).catch(err => err)
-      },
-      doBack() {
-        this.$router.back()
-      },
-      checkInfo(uid) {
-        this.$router.push('/space/' + uid)
-      },
-      getFormatTime(timeStamp) {
-        timeStamp = timeStamp.replace('+00', '+08')
-        let dateTime = new Date(timeStamp);
-        let no1new = dateTime.valueOf();
-        let year = dateTime.getFullYear();
-        let month = dateTime.getMonth() + 1;
-        let day = dateTime.getDate();
-        let now = new Date();
-        let now_new = now.valueOf();
-        let milliseconds = 0;
-        let timeSpanStr;
-
-        milliseconds = now_new - no1new;
-
-        if (milliseconds <= 1000 * 60 * 1) {
-          timeSpanStr = '刚刚';
-        } else if (1000 * 60 * 1 < milliseconds && milliseconds <= 1000 * 60 * 60) {
-          timeSpanStr = Math.round((milliseconds / (1000 * 60))) + '分钟前';
-        } else if (1000 * 60 * 60 * 1 < milliseconds && milliseconds <= 1000 * 60 * 60 * 24) {
-          timeSpanStr = Math.round(milliseconds / (1000 * 60 * 60)) + '小时前';
-        } else if (1000 * 60 * 60 * 24 < milliseconds && milliseconds <= 1000 * 60 * 60 * 24 * 15) {
-          timeSpanStr = Math.round(milliseconds / (1000 * 60 * 60 * 24)) + '天前';
-        } else if (milliseconds > 1000 * 60 * 60 * 24 * 15 && year == now.getFullYear()) {
-          timeSpanStr = year + '-' + month + '-' + day
-        } else {
-          timeSpanStr = year + '-' + month + '-' + day
-        }
-
-        return timeSpanStr;
       },
       refresh() {
         // 从url获取参数
@@ -144,14 +112,12 @@
           })
           .then(res => {
             res = res.data
-            if (res.status > 0) {
-              this.handlePicUrl(res.data)
+            if (res.status > 0)
               this.topics = res.data
-            }
           })
           .catch(err => {
             // TODO
-            console.log(err)
+            console.log("啊咧咧~")
             err
           })
       },
@@ -180,14 +146,14 @@
           return 12
         return 8
       },
-      handlePicUrl(topics) {
-        for (let i = 0; i < topics.length; i++) {
-          if (topics[i].pics === null) continue;
-          for (let j = 0; j < topics[i].pics.length; j++) {
-            topics[i].pics[j] = this.$urls.server + topics[i].pics[j]
-          }
-        }
-        console.log(topics)
+      isShow(pics, n) {
+        if (pics.length === 1 && n === 1)
+          return true
+        else if ((pics.length === 2 || pics.length === 4) && n === 2)
+          return true
+        else if (n === 9)
+          return true
+        return false
       }
     }
   }
@@ -197,15 +163,36 @@
   .el-header {
     background-color: transparent;
   }
-
+  
   .el-col {
     text-align: center;
   }
-
+  
   .img-pics {
     max-width: none;
     max-height: none;
-    width: 100%;
-    max-height: 650px;
+    width: 110px;
+    height: 110px;
+  }
+  
+  .pic-one {
+    max-width: none;
+    max-height: none;
+    width: 110px;
+    height: 110px;
+  }
+  
+  .pic-two {
+    max-width: none;
+    max-height: none;
+    width: 270px;
+    height: 270px;
+  }
+  
+  .pic-three {
+    max-width: none;
+    max-height: none;
+    width: 147px;
+    height: 147px;
   }
 </style>

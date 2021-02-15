@@ -1,12 +1,12 @@
 <template>
-  <div id="app" style="height: 100%;">
-    <router-view></router-view>
+  <div id="myinfo">
+    喵~
   </div>
 </template>
 
 <script>
   export default {
-    name: "App"
+    name: "Myinfo"
   }
 </script>
 

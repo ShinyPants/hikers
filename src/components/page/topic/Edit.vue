@@ -2,10 +2,10 @@
   <div class="div_css">
     <!-- 标题 -->
     <div>
-      <el-row :gutter="20">
-        <el-col :span="2"></el-col>
-        <el-col :span="18"><el-input v-model="topic.title" placeholder="请输入标题"></el-input></el-col>
-        <el-col :span="4"><el-button @click="submit" round>发布</el-button></el-col>
+      <el-row :gutter="24">
+        <el-col :span="20"><el-input v-model="topic.title" placeholder="请输入标题" clearable></el-input></el-col>
+        <el-col :span="2"><el-button @click="reset" type="text">清除</el-button></el-col>
+        <el-col :span="2"><el-button @click="submit" round type="success" icon="el-icon-upload">发布</el-button></el-col>
       </el-row>
     </div>
     <!-- 内容 -->
@@ -14,7 +14,9 @@
         maxlength="300"
         type="textarea"
         :autosize="{minRows:2, maxRows:10}"
-        placeholder="写点什么吧...">
+        resize="none"
+        placeholder="写点什么吧..."
+        clearable>
       </el-input>
       <div style="text-align: right;"><span>字数：{{topic.info.length}} / 300</span></div>
     </div>
@@ -86,14 +88,18 @@
         this.picsNum = 0
         this.uploadCount = 0
         this.subSuccess = false
+        this.$refs.uploader.clearFiles()
       },
       submit() {
+        // 去除空格
+        this.topic.title = this.topic.title.trim()
+        this.topic.info = this.topic.info.trim()
         // 检查数据
-        if (this.topic.title.split().length===0) {
+        if (this.topic.title.length===0) {
           this.$message("标题不能为空")
           return false
         }
-        if (this.topic.info.split().length===0) {
+        if (this.topic.info.length===0) {
           this.$message("内容不能为空")
           return false
         }
@@ -123,15 +129,15 @@
           .then(res => {
             res = res.data
             if (res.status > 0) {
-              this.$message("提交成功")
+              this.$message("发布成功")
               this.subSuccess = true
             }
             else
-              this.$message("提交失败")
+              this.$message("发布失败")
             this.goBack()
           })
           .catch(err => {
-            this.$message("提交失败")
+            this.$message("发布失败")
             this.goBack()
             err
           })
@@ -183,8 +189,11 @@
   
   .div_css {
     height: 100%;
-    overflow-x: none;
     overflow-y: scroll;
+  }
+  
+  ::-webkit-scrollbar {
+    width: 0 !important;
   }
   
   .div_pic {
