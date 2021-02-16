@@ -1,24 +1,18 @@
 <template>
   <div>
-    <div style="text-align: center;"><span>{{partName}}</span><span>欢迎您~</span></div>
-    <!-- 顶端的编辑菜单 -->
-    <!-- <div class="div_top">
-      <el-input style="width: 80%;" placeholder="板块内搜索" v-model="searchStr">
-        <i @click="doSearch" slot="suffix" class="el-input__icon el-icon-search"></i>
-      </el-input>
-      <el-button @click="doEdit" class="btn_edit" type="primary" icon="el-icon-edit"></el-button>
-    </div> -->
+    <!-- <div style="text-align: center;"><span>{{partName}}</span><span>欢迎您~</span></div> -->
+    <el-page-header @back="doBack" :content="partName"></el-page-header>
     <el-container>
       <!-- 顶端的编辑菜单 -->
       <el-header>
-        <el-row>
-          <el-col :span="1"><i class="el-icon-arrow-left" style="cursor: pointer;" @click="doBack"></i></el-col>
+        <el-row style="width: 100%;">
+          <!-- <el-col :span="1"><i class="el-icon-arrow-left" style="cursor: pointer;" @click="doBack"></i></el-col> -->
           <el-col :span="22">
             <el-input placeholder="板块内搜索" v-model="searchStr">
               <i @click="doSearch" slot="suffix" class="el-input__icon el-icon-search"></i>
             </el-input>
           </el-col>
-          <el-col :span="1" style="text-align: right;">
+          <el-col :span="2" style="text-align: right;">
             <el-button @click="doEdit" type="primary" icon="el-icon-edit"></el-button>
           </el-col>
         </el-row>
@@ -26,26 +20,7 @@
       <el-main>
         <!-- 内容 -->
         <div>
-          <div v-for="t in topics" :key="t.tid" style="width: 100%; border-radius: 10px; margin-bottom: 10px; background-color: antiquewhite;">
-            <el-image :src="$urls.server + t.photo" fit="cover" style="width: 50px; height: 50px; border-radius: 50%; overflow: hidden; float: left;"></el-image>
-            <div style="margin-left: 55px;">
-              <div>
-                <el-button type="text" @click="checkInfo(t.uid)" style="color: #fb7299; font-size: x-large; padding: 0;">{{t.nikeName}}</el-button>
-              </div>
-              <div style="font-size: small; color: #99a2aa;">{{getFormatTime(t.time)}}</div>
-              <div>{{t.title}}</div>
-              <div>{{t.info}}</div>
-              <div>
-                <el-row :gutter="24" style="text-align: center; margin: 0 auto;">
-                  <el-col :span="getSpan(t.pics)" v-for="(p,index) in t.pics" :key="index">
-                    <div style="width: 1px; padding-bottom: 100%; display: inline;"></div>
-                    <el-image :src="p" fit="cover" class="img-pics" :preview-src-list="t.pics">
-                    </el-image>
-                  </el-col>
-                </el-row>
-              </div>
-            </div>
-          </div>
+          <TopicCard v-for="t in topics" :key="t.tid" v-bind:topic="t"></TopicCard>
         </div>
       </el-main>
     </el-container>
@@ -53,8 +28,13 @@
 </template>
 
 <script>
+  import TopicCard from './TopicCard.vue'
+  
   export default {
     name: 'part',
+    components: {
+      TopicCard
+    },
     data() {
       return {
         searchStr: '',
@@ -78,39 +58,6 @@
       },
       doBack() {
         this.$router.back()
-      },
-      checkInfo(uid) {
-        this.$router.push('/space/' + uid)
-      },
-      getFormatTime(timeStamp) {
-        timeStamp = timeStamp.replace('+00', '+08')
-        let dateTime = new Date(timeStamp);
-        let no1new = dateTime.valueOf();
-        let year = dateTime.getFullYear();
-        let month = dateTime.getMonth() + 1;
-        let day = dateTime.getDate();
-        let now = new Date();
-        let now_new = now.valueOf();
-        let milliseconds = 0;
-        let timeSpanStr;
-
-        milliseconds = now_new - no1new;
-
-        if (milliseconds <= 1000 * 60 * 1) {
-          timeSpanStr = '刚刚';
-        } else if (1000 * 60 * 1 < milliseconds && milliseconds <= 1000 * 60 * 60) {
-          timeSpanStr = Math.round((milliseconds / (1000 * 60))) + '分钟前';
-        } else if (1000 * 60 * 60 * 1 < milliseconds && milliseconds <= 1000 * 60 * 60 * 24) {
-          timeSpanStr = Math.round(milliseconds / (1000 * 60 * 60)) + '小时前';
-        } else if (1000 * 60 * 60 * 24 < milliseconds && milliseconds <= 1000 * 60 * 60 * 24 * 15) {
-          timeSpanStr = Math.round(milliseconds / (1000 * 60 * 60 * 24)) + '天前';
-        } else if (milliseconds > 1000 * 60 * 60 * 24 * 15 && year == now.getFullYear()) {
-          timeSpanStr = year + '-' + month + '-' + day
-        } else {
-          timeSpanStr = year + '-' + month + '-' + day
-        }
-
-        return timeSpanStr;
       },
       refresh() {
         // 从url获取参数
@@ -173,13 +120,6 @@
             err
           })
       },
-      getSpan(pics) {
-        if (pics.length === 1)
-          return 24
-        else if (pics.length === 2 || pics.length === 4)
-          return 12
-        return 8
-      },
       handlePicUrl(topics) {
         for (let i = 0; i < topics.length; i++) {
           if (topics[i].pics === null) continue;
@@ -187,7 +127,6 @@
             topics[i].pics[j] = this.$urls.server + topics[i].pics[j]
           }
         }
-        console.log(topics)
       }
     }
   }
@@ -200,12 +139,5 @@
 
   .el-col {
     text-align: center;
-  }
-
-  .img-pics {
-    max-width: none;
-    max-height: none;
-    width: 100%;
-    max-height: 650px;
   }
 </style>

@@ -10,6 +10,7 @@ import Login from './components/page/basic/Login.vue'
 import Part from './components/page/topic/Part.vue'
 import Edit from './components/page/topic/Edit.vue'
 import Myinfo from './components/page/uinfo/Myinfo.vue'
+import TopicInfo from './components/page/topic/TopicInfo.vue'
 
 import Main from './components/Main.vue'
 
@@ -65,6 +66,14 @@ let router = new Router({
           path: "/space/:uid",
           name: "space",
           component: Myinfo,
+          meta: {
+            keepAlive: false
+          }
+        },
+        {
+          path: "/tinfo/:tid",
+          name: "tinfo",
+          component: TopicInfo,
           meta: {
             keepAlive: false
           }
