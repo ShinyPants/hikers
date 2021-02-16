@@ -72,8 +72,11 @@
         this.getHotTopics()
         this.getTopics()
       },
+      // TODO 被调用
       getTopTopics() {},
+      // TODO 被调用
       getHotTopics() {},
+      // TODO 被调用
       getTopics(type) {
         // 如果是空的，就只能重新加载
         // type = 0 重新加载
@@ -84,9 +87,10 @@
           this.loadBottom()
       },
       reloadTopics() {
-        this.$axios.get(this.$urls.user.part.reload, {
+        this.$axios.get(this.$urls.user.part.topics, {
             params: {
-              pid: this.partId
+              pid: this.partId,
+              tid: 0
             }
           })
           .then(res => {
@@ -97,16 +101,14 @@
             }
           })
           .catch(err => {
-            // TODO
             console.log(err)
-            err
           })
       },
       loadBottom() {
         this.$axios.get(this.$urls.user.part.bottom, {
             params: {
               pid: this.partId,
-              tid: this.topics.length - 1
+              tid: this.topics[this.topics.length - 1].tid
             }
           })
           .then(res => {
@@ -115,9 +117,7 @@
             console.log(res)
           })
           .catch(err => {
-            // TODO
-            console.log("啊咧咧~")
-            err
+            console.log(err)
           })
       },
       handlePicUrl(topics) {

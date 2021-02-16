@@ -9,8 +9,9 @@
     "login": "/api/user/login",
     "topic": "/api/topic",
     "part": {
-      "reload": "/api/topic/new",
-      "bottom": "/api/topic/bottom"
+      "topics": "/api/topic/topics",
+      "topicCollect": "/api/topic/collect",
+      "topicAgree": "/api/topic/agree"
     }
   },
   "file": {

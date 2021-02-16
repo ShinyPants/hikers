@@ -1,7 +1,9 @@
 <template>
-  <div style="width: 100%;">
-    <div style="width: 100%; border-radius: 10px; margin-bottom: 10px; background-color: white;">
+  <div style="width: 100%; margin: auto; background-color: white;">
+    <div style="width: 95%; margin: 0 auto 10px auto;">
+      <!-- 头像 -->
       <el-image :src="$urls.server + topic.photo" fit="cover" style="width: 50px; height: 50px; border-radius: 50%; overflow: hidden; float: left; cursor: default;"></el-image>
+      <!-- 内容 -->
       <div style="margin-left: 55px;">
         <div>
           <el-button type="text" @click="lookUserInfo(topic.uid)" style="color: #fb7299; font-size: x-large; padding: 0;">{{topic.nikeName}}</el-button>
@@ -24,6 +26,29 @@
           </el-row>
         </div>
       </div>
+      <!-- 底部的点赞栏 -->
+      <div style="border-top: 1px solid #B3C0D1;">
+        <el-row style="text-align: center; font-size: 25px; margin: 0 auto;">
+          <!-- 收藏 未收藏用star-off -->
+          <el-col :span="8">
+            <span @click="doCollect" style="cursor: pointer;">
+            <img :src="isCollect?'/icons/star_on.png':'/icons/star_off.png'" style="vertical-align: middle;">{{topic.collect}}
+            </span>
+          </el-col>
+          <!-- 评论 -->
+          <el-col :span="8" style="border-left: 1px solid #B3C0D1; border-radius: 0;">
+            <span @click="showDetail" style="cursor: pointer;">
+            <img src="/icons/talk.png" style="vertical-align: middle;">{{topic.discuss}}
+            </span>
+          </el-col>
+          <!-- 点赞 -->
+          <el-col :span="8" style="border-left: 1px solid #B3C0D1; border-radius: 0;">
+            <span @click="doAgree" style="cursor: pointer;">
+            <img :src="isAgree?'/icons/thumb_on.png':'/icons/thumb_off.png'" style="vertical-align: middle;">{{topic.agree}}
+            </span>
+          </el-col>
+        </el-row>
+      </div>
     </div>
   </div>
 </template>
@@ -37,8 +62,27 @@
     data() {
       return {
         isShowInfo: false,
-        isShowCtl: false
+        isShowCtl: false,
+        isCollect: false,
+        isAgree: false
       }
+    },
+    created() {
+      if (this.$theUser === undefined)
+        return
+      // 检查是否收藏、点赞
+      this.$axios.get(this.$urls.user.part.topicCollect, {params: {uid: this.$theUser.uid, tid: this.topic.tid}})
+        .then((res) => {
+          res = res.data
+          if (res.data)
+            this.isCollect = true
+        })
+      this.$axios.get(this.$urls.user.part.topicAgree, {params: {uid: this.$theUser.uid, tid: this.topic.tid}})
+        .then((res) => {
+          res = res.data
+          if (res.data)
+            this.isCollect = true
+        })
     },
     mounted() {
       this.$nextTick(() => {
@@ -46,6 +90,46 @@
       })
     },
     methods: {
+      doCollect() {
+        if (this.$theUser === undefined) {
+          this.$router.push('/login')
+          return
+        }
+        if (!this.isCollect) {
+        this.$axios.put(this.$urls.user.part.topicCollect + '/'+this.$theUser.uid + '/' +this.topic.tid)
+        .then(() => {
+          this.isCollect = true
+          this.topic.collect++
+        })
+        }
+        else {
+          this.$axios.delete(this.$urls.user.part.topicCollect, {params: {uid: this.$theUser.uid, tid: this.topic.tid}})
+          .then(() => {
+            this.isCollect = false
+            this.topic.collect--
+          })
+        }
+      },
+      doAgree() {
+        if (this.$theUser === undefined) {
+          this.$router.push('/login')
+          return
+        }
+        if (!this.isAgree) {
+        this.$axios.put(this.$urls.user.part.topicAgree + '/'+this.$theUser.uid + '/' +this.topic.tid)
+        .then(() => {
+          this.isAgree = true
+          this.topic.agree++
+        })
+        }
+        else {
+          this.$axios.delete(this.$urls.user.part.topicAgree, {params: {uid: this.$theUser.uid, tid: this.topic.tid}})
+          .then(() => {
+            this.isAgree = false
+            this.topic.agree--
+          })
+        }
+      },
       showInfo() {
         this.isShowInfo = !this.isShowInfo
       },
@@ -73,12 +157,10 @@
           timeSpanStr = Math.round((milliseconds / (1000 * 60))) + '分钟前';
         } else if (1000 * 60 * 60 * 1 < milliseconds && milliseconds <= 1000 * 60 * 60 * 24) {
           timeSpanStr = Math.round(milliseconds / (1000 * 60 * 60)) + '小时前';
-        } else if (1000 * 60 * 60 * 24 < milliseconds && milliseconds <= 1000 * 60 * 60 * 24 * 15) {
-          timeSpanStr = Math.round(milliseconds / (1000 * 60 * 60 * 24)) + '天前';
         } else if (milliseconds > 1000 * 60 * 60 * 24 * 15 && year == now.getFullYear()) {
-          timeSpanStr = year + '-' + month + '-' + day
+          timeSpanStr = year + '-' + month + '-' + day + ' ' + dateTime.getHours() + ':' + dateTime.getMinutes().toString().padStart(2, '0')
         } else {
-          timeSpanStr = year + '-' + month + '-' + day
+          timeSpanStr = year + '-' + month + '-' + day + ' ' + dateTime.getHours() + ':' + dateTime.getMinutes().toString().padStart(2, '0')
         }
         return timeSpanStr;
       },
@@ -106,7 +188,7 @@
     max-width: none;
     max-height: none;
     width: 100%;
-    max-height: 650px;
+    max-height: 400px;
   }
   
   .ainfo {
