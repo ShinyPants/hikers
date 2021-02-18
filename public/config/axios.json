@@ -13,7 +13,8 @@
       "topicCollect": "/api/topic/collect",
       "topicAgree": "/api/topic/agree",
       "discuss": "/api/discuss"
-    }
+    },
+    "focus": "/api/user/focus"
   },
   "file": {
     "pic": "http://127.0.0.1:8081/file/pic"

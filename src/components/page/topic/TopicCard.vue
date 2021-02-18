@@ -5,8 +5,10 @@
       <el-image :src="$urls.server + topic.photo" fit="cover" style="width: 50px; height: 50px; border-radius: 50%; overflow: hidden; float: left; cursor: default;"></el-image>
       <!-- 内容 -->
       <div style="margin-left: 55px;">
+        <!-- 用户信息 -->
         <div>
           <el-button type="text" @click="lookUserInfo(topic.uid)" style="color: #fb7299; font-size: x-large; padding: 0;">{{topic.nikeName}}</el-button>
+          <FocusButton v-bind:tuid="topic.uid" style="float: right;"></FocusButton>
         </div>
         <div style="font-size: small; color: #99a2aa;">{{getFormatTime(topic.time)}}</div>
         <div style="font-size: x-large; width: 100%; overflow: hidden; white-space: nowrap; text-overflow: ellipsis;">
@@ -54,8 +56,13 @@
 </template>
 
 <script>
+  import FocusButton from './FocusButton.vue'
+  
   export default {
     name: 'topic_card',
+    components: {
+      FocusButton
+    },
     props: {
       topic: Object
     },
