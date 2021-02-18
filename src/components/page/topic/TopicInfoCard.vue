@@ -72,7 +72,7 @@
         isAgree: false
       }
     },
-    created() {
+    activated() {
       if (this.$theUser === undefined)
         return
       // 检查是否收藏、点赞
@@ -134,6 +134,8 @@
         this.$router.push('/space/' + uid)
       },
       getFormatTime(timeStamp) {
+        if (timeStamp === undefined)
+          return null
         timeStamp = timeStamp.replace('+00', '+08')
         let dateTime = new Date(timeStamp);
         let no1new = dateTime.valueOf();
@@ -168,6 +170,8 @@
     },
     computed: {
       INFO() {
+        if (this.topic.info === undefined)
+          return this.topic.info
         return this.topic.info.replace(/\r\n/g, '<br>')
       }
     }

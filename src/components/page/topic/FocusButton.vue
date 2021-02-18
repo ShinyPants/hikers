@@ -1,6 +1,6 @@
 <template>
   <div style="display: inline;">
-    <button @click="doFocus" :class="{unfocus: !flag, yesfocus: flag}">{{flag?'已关注':'+ 关注'}}</button>
+    <button style="cursor: pointer;" @click="doFocus" :class="{unfocus: !flag, yesfocus: flag}">{{flag?'已关注':'+ 关注'}}</button>
   </div>
 </template>
 

@@ -2,6 +2,7 @@
 	"server": "http://127.0.0.1:8081/",
 	"parts": "/api/parts",
   "user": {
+    "user": "/api/user",
     "phone": "/api/user/phone/",
     "nike": "/api/user/nike/",
     "mail": "/api/user/mail/",
