@@ -1,5 +1,6 @@
 <template>
   <div style="width: 100%; margin: auto; background-color: white;">
+    <!-- 上面信息展示部分 -->
     <div style="width: 95%; margin: 0 auto 10px auto;">
       <!-- 头像 -->
       <el-image :src="$urls.server + topic.photo" fit="cover" style="width: 50px; height: 50px; border-radius: 50%; overflow: hidden; float: left; cursor: default;"></el-image>
@@ -9,12 +10,11 @@
           <el-button type="text" @click="lookUserInfo(topic.uid)" style="color: #fb7299; font-size: x-large; padding: 0;">{{topic.nikeName}}</el-button>
         </div>
         <div style="font-size: small; color: #99a2aa;">{{getFormatTime(topic.time)}}</div>
-        <div style="font-size: x-large; width: 100%; overflow: hidden; white-space: nowrap; text-overflow: ellipsis;">
+        <div style="font-size: x-large; width: 100%;">
           {{topic.title}}
         </div>
         <div style="padding-right: 30px;">
-          <a @click="showDetail" ref="ainfo" :class="{ainfo: !isShowInfo, infoopen: isShowInfo}" v-html="INFO"></a>
-          <div :class="{ctloff: !isShowCtl}" ref="ctl" style="float: right; color: orange; cursor: pointer;"><span @click="showInfo">{{CTL}}</span></div>
+          <span class="infoopen" v-html="INFO"></span>
         </div>
         <div>
           <el-row :gutter="24" style="text-align: center; margin: 0 auto;">
@@ -26,25 +26,25 @@
           </el-row>
         </div>
       </div>
-      <!-- 底部的点赞栏 -->
-      <div style="border-top: 1px solid #B3C0D1;">
+      <!-- 点赞评论收藏数 -->
+      <div style="border-top: 1px solid #B3C0D1; border-bottom: 1px solid #B3C0D1;">
         <el-row style="text-align: center; font-size: 25px; margin: 0 auto;">
-          <!-- 收藏 未收藏用star-off -->
+          <!-- 收藏 -->
           <el-col :span="8">
-            <span @click="doCollect" style="cursor: pointer;">
-            <img :src="isCollect?'/icons/star_on.png':'/icons/star_off.png'" style="vertical-align: middle;">{{topic.collect}}
+            <span>
+            <img src="/icons/star_off.png" style="vertical-align: middle;">{{topic.collect}}
             </span>
           </el-col>
           <!-- 评论 -->
           <el-col :span="8" style="border-left: 1px solid #B3C0D1; border-radius: 0;">
-            <span @click="showDetail" style="cursor: pointer;">
+            <span>
             <img src="/icons/talk.png" style="vertical-align: middle;">{{topic.discuss}}
             </span>
           </el-col>
           <!-- 点赞 -->
           <el-col :span="8" style="border-left: 1px solid #B3C0D1; border-radius: 0;">
-            <span @click="doAgree" style="cursor: pointer;">
-            <img :src="isAgree?'/icons/thumb_on.png':'/icons/thumb_off.png'" style="vertical-align: middle;">{{topic.agree}}
+            <span>
+            <img src="/icons/thumb_off.png" style="vertical-align: middle;">{{topic.agree}}
             </span>
           </el-col>
         </el-row>
@@ -61,8 +61,6 @@
     },
     data() {
       return {
-        isShowInfo: false,
-        isShowCtl: false,
         isCollect: false,
         isAgree: false
       }
@@ -81,13 +79,8 @@
         .then((res) => {
           res = res.data
           if (res.data)
-            this.isAgree = true
+            this.isCollect = true
         })
-    },
-    mounted() {
-      this.$nextTick(() => {
-        this.isShowCtl = this.$refs.ainfo.offsetHeight > 120 ? true : false
-      })
     },
     methods: {
       doCollect() {
@@ -130,12 +123,6 @@
           })
         }
       },
-      showInfo() {
-        this.isShowInfo = !this.isShowInfo
-      },
-      showDetail() {
-        this.$router.push('/tinfo/' + this.topic.tid)
-      },
       lookUserInfo(uid) {
         this.$router.push('/space/' + uid)
       },
@@ -175,9 +162,6 @@
     computed: {
       INFO() {
         return this.topic.info.replace(/\r\n/g, '<br>')
-      },
-      CTL() {
-        return this.isShowInfo === true ? '收起' : '展开'
       }
     }
   }
@@ -191,19 +175,7 @@
     max-height: 400px;
   }
   
-  .ainfo {
-    display: -webkit-box;
-    -webkit-box-orient: vertical;
-    -webkit-line-clamp: 5;
-    overflow: hidden;
-    line-height: 25px;
-  }
-  
   .infoopen {
     line-height: 25px;
-  }
-  
-  .ctloff {
-    display: none;
   }
 </style>

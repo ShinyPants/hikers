@@ -11,7 +11,8 @@
     "part": {
       "topics": "/api/topic/topics",
       "topicCollect": "/api/topic/collect",
-      "topicAgree": "/api/topic/agree"
+      "topicAgree": "/api/topic/agree",
+      "discuss": "/api/discuss"
     }
   },
   "file": {
