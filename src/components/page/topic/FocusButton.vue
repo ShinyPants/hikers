@@ -32,12 +32,22 @@
             tuid: this.tuid,
             pwd: this.$theUser.pwd
           }})
-          .then(() => {
+          .then((res) => {
+            res = res.data
+            if (res.status < 0) {
+              this.$message(res.data)
+              this.$axios.push("/login")
+            }
             this.flag = false
           }).catch((err)=>{console.log(err)})
         } else {
           this.$axios.put(this.$urls.user.focus + '/' + this.$theUser.uid + '/' + this.tuid + '/' + this.$theUser.pwd)
-          .then(() => {
+          .then((res) => {
+            res = res.data
+            if (res.status < 0) {
+              this.$message(res.data)
+              this.$axios.push("/login")
+            }
             this.flag = true
           }).catch((err)=>{console.log(err)})
         }

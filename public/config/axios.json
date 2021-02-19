@@ -15,7 +15,8 @@
       "topicAgree": "/api/topic/agree",
       "discuss": "/api/discuss"
     },
-    "focus": "/api/user/focus"
+    "focus": "/api/user/focus",
+    "dynamic": "/api/dynamic"
   },
   "file": {
     "pic": "http://127.0.0.1:8081/file/pic"

@@ -154,6 +154,7 @@
               this.$message("回复失败，请稍后重试")
             } else {
               this.$message(res.data)
+              this.$axios.push("/login")
             }
           })
           .catch((err) => {
