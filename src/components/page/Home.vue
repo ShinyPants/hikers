@@ -11,16 +11,20 @@
       <el-footer>
         <el-row>
           <el-col :span="6">
-            <el-image :src="showImage(0)" @click.native="handleClick(0)"></el-image>
+            <el-image :src="showImage(0)" @click.native="handleClick(0)" style="width: 50px; height: 50px;"></el-image>
+            <div>主页</div>
           </el-col>
           <el-col :span="6">
-            <el-image :src="showImage(1)" @click.native="handleClick(1)"></el-image>
+            <el-image :src="showImage(1)" @click.native="handleClick(1)" style="width: 50px; height: 50px;"></el-image>
+            <div>分区</div>
           </el-col>
           <el-col :span="6">
-            <el-image :src="showImage(2)" @click.native="handleClick(2)"></el-image>
+            <el-image :src="showImage(2)" @click.native="handleClick(2)" style="width: 50px; height: 50px;"></el-image>
+            <div>动态</div>
           </el-col>
           <el-col :span="6">
-            <el-image :src="showImage(3)" @click.native="handleClick(3)"></el-image>
+            <el-image :src="showImage(3)" @click.native="handleClick(3)" style="width: 50px; height: 50px;"></el-image>
+            <div>个人</div>
           </el-col>
         </el-row>
       </el-footer>
@@ -39,23 +43,23 @@
     data() {
       return {
         picbar: [{
-            defaultPic: "/icons/forbidden.png",
-            selectedPic: "/icons/forbidden_filled.png",
+            defaultPic: "/icons/home.png",
+            selectedPic: "/icons/home_click.png",
             toPage: Index
           },
           {
-            defaultPic: "/icons/help.png",
-            selectedPic: "/icons/help_filled.png",
+            defaultPic: "/icons/part.png",
+            selectedPic: "/icons/part_click.png",
             toPage: Cate
           },
           {
-            defaultPic: "/icons/info.png",
-            selectedPic: "/icons/info_filled.png",
+            defaultPic: "/icons/dynamic.png",
+            selectedPic: "/icons/dynamic_click.png",
             toPage: Focus
           },
           {
-            defaultPic: "/icons/info.png",
-            selectedPic: "/icons/info_filled.png",
+            defaultPic: "/icons/self.png",
+            selectedPic: "/icons/self_click.png",
             toPage: Space
           }
         ],
