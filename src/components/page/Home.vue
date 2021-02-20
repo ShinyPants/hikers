@@ -24,7 +24,7 @@
           </el-col>
           <el-col :span="6">
             <el-image :src="showImage(3)" @click.native="handleClick(3)" style="width: 50px; height: 50px;"></el-image>
-            <div>个人</div>
+            <div>我的</div>
           </el-col>
         </el-row>
       </el-footer>

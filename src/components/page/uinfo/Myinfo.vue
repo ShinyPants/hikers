@@ -4,8 +4,8 @@
     <div style="background-color: blueviolet; padding-top: 20px; background-image: url('/images/backpic.png');">
       <!-- 头像 -->
       <div style="text-align: center;">
-        <el-image :src="$urls.server + user.photo"
-          style="border-radius: 50%; height: 100px; width: 100px; border: 1px solid white;"></el-image>
+        <img :src="$urls.server + user.photo"
+          style="border-radius: 50%; height: 100px; width: 100px; border: 1px solid white;">
       </div>
       <!-- 昵称 -->
       <div style="text-align: center; font-size: xx-large; color: #fb7299;">

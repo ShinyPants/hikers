@@ -11,6 +11,11 @@ import Part from './components/page/topic/Part.vue'
 import Edit from './components/page/topic/Edit.vue'
 import Myinfo from './components/page/uinfo/Myinfo.vue'
 import TopicInfo from './components/page/topic/TopicInfo.vue'
+// 个人中心部分
+import MyMessage from './components/page/home/space/MyMessage.vue'
+import MyTopic from './components/page/home/space/MyTopic.vue'
+import MyFocus from './components/page/home/space/MyFocus.vue'
+import MySelf from './components/page/home/space/MySelf.vue'
 
 import Main from './components/Main.vue'
 
@@ -77,7 +82,39 @@ let router = new Router({
           meta: {
             keepAlive: false
           }
-        }
+        },
+        {
+          path: "/me/message",
+          name: "mymessage",
+          component: MyMessage,
+          meta: {
+            needLogin: true
+          }
+        },
+        {
+          path: "/me/topic",
+          name: "mytopic",
+          component: MyTopic,
+          meta: {
+            needLogin: true
+          }
+        },
+        {
+          path: "/me/focus",
+          name: "myfocus",
+          component: MyFocus,
+          meta: {
+            needLogin: true
+          }
+        },
+        {
+          path: "/me/self",
+          name: "myself",
+          component: MySelf,
+          meta: {
+            needLogin: true
+          }
+        },
       ]
 		},
 		{
