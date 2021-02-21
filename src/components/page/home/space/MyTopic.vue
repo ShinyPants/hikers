@@ -1,5 +1,5 @@
 <template>
-  <div id="my_topic">
+  <div id="my_topic" style="overflow-y: scroll;">
     <div v-for="(t,index) in topics" :key="t.tid">
       <div style="text-align: right;">
         <span @click="doDel(t.tid, index)" style="cursor: pointer; color: red; float: right;">删除</span>
