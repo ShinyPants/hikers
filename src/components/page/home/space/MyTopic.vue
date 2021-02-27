@@ -1,25 +1,32 @@
 <template>
-  <div id="my_topic">
+  <div id="my_topic" style="overflow-y: scroll; height: 100%;" ref="dddiv">
     <div v-for="(t,index) in topics" :key="t.tid">
       <div style="text-align: right;">
         <span @click="doDel(t.tid, index)" style="cursor: pointer; color: red; float: right;">删除</span>
       </div>
       <TopicCard v-bind:topic="t"></TopicCard>
     </div>
+    <mugen-scroll :handler="loadBottom" :should-handle="!loading" scrollContainer="dddiv">
+      <el-divider>{{!stopLoading?'正在加载中':'已经到底啦'}}</el-divider>
+    </mugen-scroll>
   </div>
 </template>
 
 <script>
   import TopicCard from '../FocusTopicCard.vue'
+  import MugenScroll from 'vue-mugen-scroll'
 
   export default {
     name: 'topic',
     components: {
-      TopicCard
+      TopicCard,
+      MugenScroll
     },
     data() {
       return {
-        topics: []
+        topics: [],
+        loading: false,
+        stopLoading: false
       }
     },
     activated() {
@@ -33,9 +40,30 @@
             res = res.data
             this.handlePicUrl(res.data)
             this.topics = res.data
+            if (res.data.length < this.$config.loadNum)
+              this.stopLoading = true
           })
           .catch((err) => {
             console.log(err)
+          })
+      },
+      loadBottom() {
+        if (this.topics.length < this.$config.loadNum || this.stopLoading == true)
+          return
+        this.loading = true
+        let uid = this.$theUser.uid
+        this.$axios.get(this.$urls.user.part.topics + '/' + uid + '/' + this.topics[this.topics.length - 1].tid)
+          .then((res) => {
+            res = res.data
+            this.handlePicUrl(res.data)
+            this.topics = this.topics.concat(res.data)
+            if (res.data.length < this.$config.loadNum)
+              this.stopLoading = true
+            this.loading = false
+          })
+          .catch((err) => {
+            console.log(err)
+            this.loading = false
           })
       },
       handlePicUrl(topics) {

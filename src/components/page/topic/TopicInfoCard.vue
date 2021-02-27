@@ -34,19 +34,19 @@
           <!-- 收藏 -->
           <el-col :span="8">
             <span>
-            <img src="/icons/star_off.png" style="vertical-align: middle;">{{topic.collect}}
+            收藏：{{topic.collect}}
             </span>
           </el-col>
           <!-- 评论 -->
           <el-col :span="8" style="border-left: 1px solid #B3C0D1; border-radius: 0;">
             <span>
-            <img src="/icons/talk.png" style="vertical-align: middle;">{{topic.discuss}}
+            讨论：{{topic.discuss}}
             </span>
           </el-col>
           <!-- 点赞 -->
           <el-col :span="8" style="border-left: 1px solid #B3C0D1; border-radius: 0;">
             <span>
-            <img src="/icons/thumb_off.png" style="vertical-align: middle;">{{topic.agree}}
+            点赞：{{topic.agree}}
             </span>
           </el-col>
         </el-row>

@@ -1,5 +1,5 @@
 <template>
-  <div id="myinfo" style="overflow-y: scroll;">
+  <div id="myinfo" style="overflow-y: scroll;" ref="dddiv">
     <!-- 个人信息展示 -->
     <div style="background-color: blueviolet; padding-top: 20px; background-image: url('/images/backpic.png');">
       <!-- 头像 -->
@@ -26,24 +26,31 @@
     <div>
       <TopicCard v-for="t in topics" :key="t.tid" v-bind:topic="t"></TopicCard>
     </div>
+    <mugen-scroll :handler="loadBottom" :should-handle="!loading" scrollContainer="dddiv">
+      <el-divider>{{!stopLoading?'正在加载中':'已经到底啦'}}</el-divider>
+    </mugen-scroll>
   </div>
 </template>
 
 <script>
   import FocusButton from '../topic/FocusButton.vue'
   import TopicCard from '../topic/TopicCard.vue'
+  import MugenScroll from 'vue-mugen-scroll'
   
   export default {
     name: "Myinfo",
     components: {
       FocusButton,
-      TopicCard
+      TopicCard,
+      MugenScroll
     },
     data() {
       return {
         uid: this.$route.params.uid,
         user: {},
-        topics: []
+        topics: [],
+        loading: false,
+        stopLoading: false
       }
     },
     activated() {
@@ -65,10 +72,33 @@
             if (res.status > 0) {
               this.handlePicUrl(res.data)
               this.topics = res.data
+              if (res.data.length < this.$config.loadNum)
+                this.stopLoading = true
             }
           })
           .catch(err => {
             console.log(err)
+          })
+      },
+      loadBottom() {
+        if (this.topics.length < this.$config.loadNum || this.stopLoading == true)
+          return
+        this.loading = true
+        // 获取发过的帖子
+        this.$axios.get(this.$urls.user.part.topics + '/' + this.uid + '/' + this.topics[this.topics.length - 1].tid)
+          .then(res => {
+            res = res.data
+            if (res.status > 0) {
+              this.handlePicUrl(res.data)
+              this.topics = this.topics.concat(res.data)
+              if (res.data.length < this.$config.loadNum)
+                this.stopLoading = true
+            }
+            this.loading = false
+          })
+          .catch(err => {
+            console.log(err)
+            this.loading = false
           })
       },
       handlePicUrl(topics) {

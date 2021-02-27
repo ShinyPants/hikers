@@ -17,11 +17,12 @@
           </el-col>
         </el-row>
       </el-header>
-      <el-main>
+      <el-main ref="dddiv">
         <!-- 内容 -->
-        <div>
-          <TopicCard v-for="t in topics" :key="t.tid" v-bind:topic="t"></TopicCard>
-        </div>
+        <TopicCard v-for="t in topics" :key="t.tid" v-bind:topic="t"></TopicCard>
+        <mugen-scroll :handler="loadBottom" :should-handle="!loading" scrollContainer="dddiv">
+          <el-divider>{{!stopLoading?'正在加载中':'已经到底啦'}}</el-divider>
+        </mugen-scroll>
       </el-main>
     </el-container>
   </div>
@@ -29,11 +30,13 @@
 
 <script>
   import TopicCard from './TopicCard.vue'
-  
+  import MugenScroll from 'vue-mugen-scroll'
+
   export default {
     name: 'part',
     components: {
-      TopicCard
+      TopicCard,
+      MugenScroll
     },
     data() {
       return {
@@ -42,7 +45,9 @@
         partName: '',
         topTopics: [],
         hotTopics: [],
-        topics: []
+        topics: [],
+        loading: false,
+        stopLoading: false
       }
     },
     activated() {
@@ -97,6 +102,8 @@
             res = res.data
             if (res.status > 0) {
               this.handlePicUrl(res.data)
+              if (res.data.length < this.$config.loadNum)
+                this.stopLoading = true
               this.topics = res.data
             }
           })
@@ -105,7 +112,10 @@
           })
       },
       loadBottom() {
-        this.$axios.get(this.$urls.user.part.bottom, {
+        if (this.topics.length < this.$config.loadNum || this.stopLoading == true)
+          return
+        this.loading = true
+        this.$axios.get(this.$urls.user.part.topics, {
             params: {
               pid: this.partId,
               tid: this.topics[this.topics.length - 1].tid
@@ -113,11 +123,17 @@
           })
           .then(res => {
             res = res.data
-            // TODO
-            console.log(res)
+            if (res.status > 0) {
+              this.handlePicUrl(res.data)
+              this.topics = this.topics.concat(res.data)
+              if (res.data.length < this.$config.loadNum)
+                this.stopLoading = true
+            }
+            this.loading = false
           })
           .catch(err => {
             console.log(err)
+            this.loading = false
           })
       },
       handlePicUrl(topics) {
@@ -139,5 +155,10 @@
 
   .el-col {
     text-align: center;
+  }
+  
+  .el-divider__text {
+    padding: 0 !important;
+    background-color: transparent !important;
   }
 </style>

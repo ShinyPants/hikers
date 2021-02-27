@@ -1,5 +1,5 @@
 <template>
-  <div style="width: 100%;">
+  <div style="width: 100%; height: 100%; overflow-y: scroll;"  ref="dddiv">
     <!-- 内容 -->
     <TopicInfoCard v-bind:topic="topic"></TopicInfoCard>
     <!-- 编辑栏 -->
@@ -22,16 +22,20 @@
     <div style="width: 80%; margin: 0 auto; margin-bottom: 50px;">
       <DiscussCard v-for="d in dises" :key="d.did" v-bind:discuss="d"></DiscussCard>
     </div>
+    <mugen-scroll style="z-index: -1;" :handler="loadBottom" :should-handle="!loading" scrollContainer="dddiv">
+      <el-divider>{{!stopLoading?'正在加载中':'已经到底啦'}}</el-divider>
+    </mugen-scroll>
   </div>
 </template>
 
 <script>
   import TopicInfoCard from './TopicInfoCard.vue'
   import DiscussCard from './DiscussCard.vue'
+  import MugenScroll from 'vue-mugen-scroll'
   
   export default {
     name: 'topic_info',
-    components: {TopicInfoCard, DiscussCard},
+    components: {TopicInfoCard, DiscussCard, MugenScroll},
     activated() {
       this.$nextTick(() => {this.init()})
     },
@@ -41,7 +45,9 @@
         isCollect: false,
         isAgree: false,
         myDis: '',
-        dises: []
+        dises: [],
+        loading: false,
+        stopLoading: false
       }
     },
     methods: {
@@ -67,6 +73,8 @@
           .then((res) => {
             res = res.data
             this.dises = res.data
+            if (res.data < this.$config.loadNum)
+              this.stopLoading = true
           })
           .catch(err => {console.log(err)})
         // 检查是否收藏、点赞
@@ -83,6 +91,24 @@
             res = res.data
             if (res.data)
               this.isAgree = true
+          })
+      },
+      loadBottom() {
+        if (this.dises.length < this.$config.loadNum || this.stopLoading == true)
+          return
+        this.loading = true
+        // 获取评论
+        this.$axios.get(this.$urls.user.part.discuss, {params: {tid: this.$route.params.tid, did: this.dises[this.dises.length - 1].did}})
+          .then((res) => {
+            res = res.data
+            this.dises = this.dises.concat(res.data)
+            if (res.data < this.$config.loadNum)
+              this.stopLoading = true
+            this.loading = false
+          })
+          .catch(err => {
+            console.log(err)
+            this.loading = false
           })
       },
       handlePicUrl(topic) {

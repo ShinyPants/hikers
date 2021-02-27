@@ -9,12 +9,15 @@ import 'element-ui/lib/theme-chalk/index.css'
 import axios from 'axios'
 // 导入URL配置
 import server from '../public/config/axios.json'
+// 导入基本配置
+import config from '../public/config/basic.json'
 
 // 使用ElementUI
 Vue.use(ElementUI)
 
-// 将链接放入全局，方便调用
+// 将配置放入全局，方便调用
 Vue.prototype.$urls = server
+Vue.prototype.$config = config
 // 设置axios的baseUrl
 axios.defaults.baseURL = server.server
 // 将axios放入全局变量，将来需要时可用this.$axios

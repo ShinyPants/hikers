@@ -19,6 +19,8 @@ import MySelf from './components/page/home/space/MySelf.vue'
 
 import Main from './components/Main.vue'
 
+import Test from './components/Test.vue'
+
 // 使用router
 Vue.use(Router)
 
@@ -115,6 +117,11 @@ let router = new Router({
             needLogin: true
           }
         },
+        {
+          path: "/test",
+          name: "thetest",
+          component: Test
+        }
       ]
 		},
 		{

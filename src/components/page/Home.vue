@@ -2,11 +2,9 @@
   <div id="home">
     <el-container ref="container">
       <el-main>
-        <el-scrollbar style="height: 100%;">
           <keep-alive>
             <component :is="showPage"></component>
           </keep-alive>
-        </el-scrollbar>
       </el-main>
       <el-footer>
         <el-row>
@@ -121,9 +119,5 @@
   .el-col {
     margin-top: 5px;
     margin-bottom: 5px;
-  }
-
-  .el-scrollbar__wrap {
-    overflow: hidden scroll !important;
   }
 </style>
