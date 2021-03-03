@@ -17,7 +17,8 @@
     },
     "focus": "/api/user/focus",
     "dynamic": "/api/dynamic",
-    "myfocus": "/api/myfocus"
+    "myfocus": "/api/myfocus",
+    "msg": "/api/msg"
   },
   "file": {
     "pic": "http://127.0.0.1:8081/file/pic"

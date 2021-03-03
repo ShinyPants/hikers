@@ -8,12 +8,10 @@
 	export default {
     data() {
       return {
-        str: '这是主页\n'
+        str: '还没想好主页要加什么内容'
       }
     },
 		mounted() {
-      for (let i=0; i<10; i++)
-        this.str += this.str
 		},
     methods: {
       refresh() {}

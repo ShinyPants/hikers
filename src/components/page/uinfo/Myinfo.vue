@@ -18,7 +18,10 @@
           <el-col :span="5" style="text-align: right;">粉丝数：{{user.fans}}</el-col>
           <el-col :span="2"></el-col>
           <el-col :span="5" style="text-align: left;">关注数：{{user.focus}}</el-col>
-          <el-col :span="6" style="text-align: right;"><FocusButton :tuid="user.uid"></FocusButton></el-col>
+          <el-col :span="6" style="text-align: right;">
+            <MsgButton v-bind:tid="user.uid" style="float: left;"></MsgButton>
+            <FocusButton :tuid="user.uid"></FocusButton>
+          </el-col>
         </el-row>
       </div>
     </div>
@@ -36,13 +39,15 @@
   import FocusButton from '../topic/FocusButton.vue'
   import TopicCard from '../topic/TopicCard.vue'
   import MugenScroll from 'vue-mugen-scroll'
+  import MsgButton from './MsgButton.vue'
   
   export default {
     name: "Myinfo",
     components: {
       FocusButton,
       TopicCard,
-      MugenScroll
+      MugenScroll,
+      MsgButton
     },
     data() {
       return {

@@ -16,9 +16,10 @@ import MyMessage from './components/page/home/space/MyMessage.vue'
 import MyTopic from './components/page/home/space/MyTopic.vue'
 import MyFocus from './components/page/home/space/MyFocus.vue'
 import MySelf from './components/page/home/space/MySelf.vue'
-
+import MsgEdit from './components/page/uinfo/MsgEdit.vue'
+// 主页面
 import Main from './components/Main.vue'
-
+// 测试用页面
 import Test from './components/Test.vue'
 
 // 使用router
@@ -115,6 +116,15 @@ let router = new Router({
           component: MySelf,
           meta: {
             needLogin: true
+          }
+        },
+        {
+          path: "/me/msgedit/:tid",
+          name: "msgedit",
+          component: MsgEdit,
+          meta: {
+            needLogin: true,
+            keepAlive: false
           }
         },
         {
