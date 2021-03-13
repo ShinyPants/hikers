@@ -3,8 +3,7 @@ import Router from 'vue-router'
 
 // 导入组件
 import Home from './components/page/Home.vue'
-import Adm from './components/adm/Adm.vue'
-import Cate from './components/page/home/Categories.vue'
+// import Cate from './components/page/home/Categories.vue'
 import Regist from './components/page/basic/Regist.vue'
 import Login from './components/page/basic/Login.vue'
 import Part from './components/page/topic/Part.vue'
@@ -19,6 +18,16 @@ import MySelf from './components/page/home/space/MySelf.vue'
 import MsgEdit from './components/page/uinfo/MsgEdit.vue'
 // 主页面
 import Main from './components/Main.vue'
+
+// 管理员页面
+import Adm from './components/adm/Adm.vue'
+import AdmLogin from './components/adm/AdmLogin.vue'
+// 管理员功能
+import AdmCate from './components/adm/topic/AdmCategories.vue'
+import AdmPart from './components/adm/topic/AdmPart.vue'
+import AdmTopicInfo from './components/adm/topic/AdmTopicInfo.vue'
+import AdmControlTopic from './components/adm/topic/AdmControlTopic.vue'
+
 // 测试用页面
 import Test from './components/Test.vue'
 
@@ -27,16 +36,16 @@ Vue.use(Router)
 
 // 配置路由
 let router = new Router({
-	routes: [{
-			path: "/",
-			name: "default",
-			component: Main,
+  routes: [
+    {
+      path: "/",
+      name: "default",
+      component: Main,
       meta: {
         keepAlive: true
       },
       redirect: '/home',
-      children: [
-        {
+      children: [{
           path: '/home',
           name: 'home',
           component: Home,
@@ -133,25 +142,55 @@ let router = new Router({
           component: Test
         }
       ]
-		},
-		{
-			path: "/adm",
-			name: "/adm",
-			component: Adm,
-			children: [{
-				path: "/cate",
-				component: Cate
-			},
-      {
-        path: "/regist",
-        component: Regist
-      },
-      {
-        path: "/login",
-        component: Login
-      }]
-		}
-	]
+    },
+    {
+      path: "/adm",
+      name: "/adm",
+      component: Adm,
+      children: [{
+          path: "cate",
+          component: AdmCate
+        },
+        {
+          path: "part/:partId/:partName",
+          component: AdmPart
+        },
+        {
+          path: "edit/:partId",
+          component: Edit,
+          meta: {
+            needLogin: true
+          }
+        },
+        {
+          path: "tinfo/:tid",
+          component: AdmTopicInfo,
+          meta: {
+            keepAlive: false
+          }
+        },
+        {
+          path: "regist",
+          component: Regist
+        },
+        {
+          path: "topic_control",
+          component: AdmControlTopic
+        },
+        {
+          path: "me/message",
+          component: MyMessage,
+          meta: {
+            needLogin: true
+          }
+        },
+      ]
+    },
+    {
+      path: "/adm/login",
+      component: AdmLogin
+    }
+  ]
 })
 
 // 导出

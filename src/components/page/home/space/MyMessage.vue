@@ -32,7 +32,6 @@
         let lst = []
         let st = new Set()
         for (let i in dt) {
-          console.log(dt[i])
           let str = ''
           if (dt[i].fuid<dt[i].tuid) {
             str = dt[i].fuid + ":" + dt[i].tuid
@@ -45,7 +44,6 @@
             st.add(str)
           }
         }
-        console.log(lst)
         return lst
       }
     }

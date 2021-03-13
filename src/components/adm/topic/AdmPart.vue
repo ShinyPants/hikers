@@ -50,7 +50,7 @@
         stopLoading: false
       }
     },
-    activated() {
+    created() {
       if (this.partId !== this.$route.params.partId)
         this.refresh()
     },
@@ -71,7 +71,7 @@
         })
       },
       doEdit() {
-        this.$router.push('/edit/' + this.partId).catch(err => err)
+        this.$router.push('/adm/edit/' + this.partId).catch(err => err)
       },
       doBack() {
         this.$router.back()

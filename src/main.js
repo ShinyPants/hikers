@@ -36,7 +36,8 @@ router.beforeEach(function(to, from, next) {
         path: "/login"
       })
     }
-  } else {
+  }
+  else {
     // 不需要登录
     next()
   }
