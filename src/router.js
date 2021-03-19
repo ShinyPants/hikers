@@ -27,6 +27,7 @@ import AdmCate from './components/adm/topic/AdmCategories.vue'
 import AdmPart from './components/adm/topic/AdmPart.vue'
 import AdmTopicInfo from './components/adm/topic/AdmTopicInfo.vue'
 import AdmControlTopic from './components/adm/topic/AdmControlTopic.vue'
+import PartManage from './components/adm/topic/PartManage.vue'
 
 // 测试用页面
 import Test from './components/Test.vue'
@@ -184,6 +185,10 @@ let router = new Router({
             needLogin: true
           }
         },
+        {
+          path: "partmng",
+          component: PartManage
+        }
       ]
     },
     {

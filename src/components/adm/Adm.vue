@@ -16,6 +16,7 @@
             </el-menu-item-group>
             <el-menu-item-group title="论坛管理">
               <el-menu-item index="1-4" @click="handleClick('/adm/topic_control')">内容管理</el-menu-item>
+              <el-menu-item index="1-5" @click="handleClick('/adm/partmng')">分区管理</el-menu-item>
             </el-menu-item-group>
           </el-submenu>
           <el-submenu index="2">
@@ -66,7 +67,7 @@
         <!-- header  开始 -->
         <!-- 主界面  开始 -->
         <el-main>
-            <router-view style="height: 100%;"></router-view>
+          <router-view style="height: 100%;"></router-view>
         </el-main>
         <!-- 主界面  结束 -->
       </el-container>
@@ -75,6 +76,8 @@
 </template>
 
 <script>
+  import Vue from 'vue'
+
   export default {
     name: "adm",
     data() {
@@ -103,6 +106,16 @@
       }
     },
     created() {
+      this.$axios.get(this.$urls.parts)
+        .then((res) => {
+          res = res.data
+          if (res.status > 0) {
+            // 排序
+            Vue.prototype.$parts = res.data.sort(function(a, b) {
+              return b["score"] - a["score"]
+            })
+          }
+        })
       if (this.$theAdm === undefined) {
         this.$router.replace("/adm/login").catch()
         return
