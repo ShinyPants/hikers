@@ -28,6 +28,10 @@ import AdmPart from './components/adm/topic/AdmPart.vue'
 import AdmTopicInfo from './components/adm/topic/AdmTopicInfo.vue'
 import AdmControlTopic from './components/adm/topic/AdmControlTopic.vue'
 import PartManage from './components/adm/topic/PartManage.vue'
+import AddSight from './components/adm/sights/AddSight.vue'
+import EditSight from './components/adm/sights/EditSight.vue'
+import AddHotels from './components/adm/hotels/AddHotels.vue'
+import EditHotels from './components/adm/hotels/EditHotels.vue'
 
 // 测试用页面
 import Test from './components/Test.vue'
@@ -188,6 +192,22 @@ let router = new Router({
         {
           path: "partmng",
           component: PartManage
+        },
+        {
+          path: "add_sight",
+          component: AddSight
+        },
+        {
+          path: "edit_sight",
+          component: EditSight
+        },
+        {
+          path: "add_hotel",
+          component: AddHotels
+        },
+        {
+          path: "edit_hotel",
+          component: EditHotels
         }
       ]
     },
