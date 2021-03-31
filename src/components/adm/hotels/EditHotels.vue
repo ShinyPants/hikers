@@ -35,7 +35,13 @@
         <el-table-column
           prop="info" label="酒店介绍"></el-table-column>
         <el-table-column
-          prop="rooms" label="酒店房间"></el-table-column>
+          prop="rooms" label="酒店房间">
+          <template slot-scope="scope">
+            <span v-for="(r, index) in scope.row.rooms" :key="index">
+              <span>{{r.roomtype}}&nbsp;<span style="color: indianred;">数量：{{r.num}}</span>&nbsp;<span style="color: blueviolet;">价格：{{r.price}}</span></span><br>
+            </span>
+          </template>
+        </el-table-column>
         <el-table-column label="操作">
           <template slot-scope="scope">
             <el-button @click="startEdit(scope.row)" type="text" size="small">编辑</el-button>

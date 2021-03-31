@@ -10,12 +10,16 @@ import Part from './components/page/topic/Part.vue'
 import Edit from './components/page/topic/Edit.vue'
 import Myinfo from './components/page/uinfo/Myinfo.vue'
 import TopicInfo from './components/page/topic/TopicInfo.vue'
+import SightList from './components/page/more/SightList.vue'
+import HotelList from './components/page/more/HotelList.vue'
+import OrderHotel from './components/page/more/OrderHotel.vue'
 // 个人中心部分
 import MyMessage from './components/page/home/space/MyMessage.vue'
 import MyTopic from './components/page/home/space/MyTopic.vue'
 import MyFocus from './components/page/home/space/MyFocus.vue'
 import MySelf from './components/page/home/space/MySelf.vue'
 import MsgEdit from './components/page/uinfo/MsgEdit.vue'
+import MyOrder from './components/page/home/space/MyOrder.vue'
 // 主页面
 import Main from './components/Main.vue'
 
@@ -32,6 +36,7 @@ import AddSight from './components/adm/sights/AddSight.vue'
 import EditSight from './components/adm/sights/EditSight.vue'
 import AddHotels from './components/adm/hotels/AddHotels.vue'
 import EditHotels from './components/adm/hotels/EditHotels.vue'
+import AdmOrders from './components/adm/hotels/Orders.vue'
 
 // 测试用页面
 import Test from './components/Test.vue'
@@ -142,6 +147,37 @@ let router = new Router({
           }
         },
         {
+          path: "/me/order",
+          name: 'myorder',
+          component: MyOrder,
+          meta: {
+            needLogin: true
+          }
+        },
+        {
+          path: "/sights",
+          name: "thesights",
+          component: SightList
+        },
+        {
+          path: "/hotels",
+          name: "thehotels",
+          component: HotelList
+        },
+        {
+          path: "/hotels/:sid",
+          name: "thehotels",
+          component: HotelList
+        },
+        {
+          path: "/orderhotel/:hid",
+          name: "orderhotel",
+          component: OrderHotel,
+          meta: {
+            needLogin: true
+          }
+        },
+        {
           path: "/test",
           name: "thetest",
           component: Test
@@ -208,6 +244,10 @@ let router = new Router({
         {
           path: "edit_hotel",
           component: EditHotels
+        },
+        {
+          path: "adm_order",
+          component: AdmOrders
         }
       ]
     },

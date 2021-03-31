@@ -31,7 +31,7 @@
             <el-menu-item-group>
               <el-menu-item index="3-1" @click="handleClick('/adm/add_hotel')">添加酒店</el-menu-item>
               <el-menu-item index="3-2" @click="handleClick('/adm/edit_hotel')">编辑酒店</el-menu-item>
-              <el-menu-item index="3-3">查看预定</el-menu-item>
+              <el-menu-item index="3-3" @click="handleClick('/adm/adm_order')">查看预定</el-menu-item>
             </el-menu-item-group>
           </el-submenu>
         </el-menu>
@@ -76,7 +76,7 @@
           this.$router.replace("/adm/login").catch()
           return
         }
-        this.$router.push(url)
+        this.$router.push(url).catch()
       },
       doLogout() {
         this.$theAdm = undefined

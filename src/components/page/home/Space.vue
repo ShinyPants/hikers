@@ -48,6 +48,12 @@
             <div>个人信息</div>
           </div>
         </el-col>
+        <el-col :span="6">
+          <div @click="doClick('/me/order')" style="width: 60px; cursor: pointer;">
+            <el-image src="/icons/mySelf.png" style="width: 50px; height: 50px;"></el-image>
+            <div>我的订单</div>
+          </div>
+        </el-col>
       </el-row>
     </div>
   </div>
