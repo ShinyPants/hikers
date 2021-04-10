@@ -17,6 +17,7 @@
             <el-menu-item-group title="论坛管理">
               <el-menu-item index="1-4" @click="handleClick('/adm/topic_control')">内容管理</el-menu-item>
               <el-menu-item index="1-5" @click="handleClick('/adm/partmng')">分区管理</el-menu-item>
+              <el-menu-item index="1-6" @click="handleClick('/adm/handle_report')">举报处理</el-menu-item>
             </el-menu-item-group>
           </el-submenu>
           <el-submenu index="2">

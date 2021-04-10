@@ -13,6 +13,7 @@ import TopicInfo from './components/page/topic/TopicInfo.vue'
 import SightList from './components/page/more/SightList.vue'
 import HotelList from './components/page/more/HotelList.vue'
 import OrderHotel from './components/page/more/OrderHotel.vue'
+import EditReport from './components/page/more/EditReport.vue'
 // 个人中心部分
 import MyMessage from './components/page/home/space/MyMessage.vue'
 import MyTopic from './components/page/home/space/MyTopic.vue'
@@ -37,6 +38,7 @@ import EditSight from './components/adm/sights/EditSight.vue'
 import AddHotels from './components/adm/hotels/AddHotels.vue'
 import EditHotels from './components/adm/hotels/EditHotels.vue'
 import AdmOrders from './components/adm/hotels/Orders.vue'
+import HandleReport from './components/adm/topic/HandleReport.vue'
 
 // 测试用页面
 import Test from './components/Test.vue'
@@ -178,6 +180,10 @@ let router = new Router({
           }
         },
         {
+          path: "/editreport/:tid/:uid",
+          component: EditReport
+        },
+        {
           path: "/test",
           name: "thetest",
           component: Test
@@ -248,6 +254,10 @@ let router = new Router({
         {
           path: "adm_order",
           component: AdmOrders
+        },
+        {
+          path: "handle_report",
+          component: HandleReport
         }
       ]
     },
